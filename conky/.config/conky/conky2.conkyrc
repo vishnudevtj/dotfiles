@@ -1,0 +1,51 @@
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 1
+total_run_times 0
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_colour 000000
+own_window_argb_visual yes
+own_window_argb_value 0
+
+double_buffer yes
+minimum_size 260 20
+maximum_width 500
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+alignment bottom_right
+gap_x 10
+gap_y 0
+
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+use_spacer yes
+
+default_color 504f5d
+color1 504f5d
+color2 504f5d
+color3 
+color4
+color5
+
+minimum_size 260 100
+TEXT
+
+${font}${font Distortion Dos Digital:pixelsize=12}\
+“You know you're in love when you can't fall asleep${font}
+${font}${font Distortion Dos Digital:pixelsize=12}\
+because reality is finally better than your dreams.”\
+${font}
+${font}${font Distortion Dos Digital:bold:pixelsize=12}\
+― Dr. Seuss\
+${font}

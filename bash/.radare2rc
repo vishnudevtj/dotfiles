@@ -1,0 +1,6 @@
+# Solarized theme
+e scr.utf8 = true
+e cfg.editor = vim
+# e asm.describe = true
+
+$wiki=#!pipe python /opt/r2wiki/r2wiki.py

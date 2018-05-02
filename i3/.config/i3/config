@@ -1,0 +1,251 @@
+set $mod Mod4
+smart_gaps on
+
+for_window [class=".*"] border pixel 2
+gaps inner 8
+gaps outer 0
+font pango:Noto Sans 10.5
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+floating_maximum_size 1300 x 700
+# start a terminal
+bindsym $mod+Return  [class="Termite"] border pixel 15 , exec termite 
+#bindsym $mod+Return exec tilda
+
+assign [class="Emacs"] $workspace1
+for_window [class="Firefox-ers"] border pixel 1
+for_window [class='(?i)termite']  border pixel 15
+
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+
+bindsym $mod+Ctrl+Right move workspace to output right
+bindsym $mod+Ctrl+Left move workspace to output left
+bindsym $mod+Ctrl+Up move workspace to output up
+bindsym $mod+Ctrl+Down move workspace to output down
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+workspace_auto_back_and_forth yes
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "0"
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5 
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+
+exec --no-startup-id i3-msg 'workspace$workspace4; exec mpd  ;exec termite -e  'ncmpcpp';exec termite  -e 'cava''
+exec --no-startup-id i3-msg 'workspace $workspace2; exec firefox'
+exec --no-startup-id i3-msg 'exec emacs'
+exec --no-startup-id i3-msg 'workspace $workspace10'
+
+# exec --no-startup-id i3-msg 'workspace $workspace10;exec sleep 10s; exec termite -e 'glances' ; workspace $workspace1'
+
+Bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3/ inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+mode "gaps" {
+        bindsym Down gaps inner all minus 1
+        bindsym Left gaps outer all minus 1
+        bindsym Up gaps inner all plus 1
+        bindsym Right gaps outer all plus 1
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Tab    mode "default"
+}
+
+bindsym $mod+g mode "gaps"
+
+
+set $background #242730
+set $foreground #bfbfbf
+set $black      #5b4848
+set $red	    #cb6077
+set $green		#bec55b
+set $yellow		#e4bc87
+set $blue		#8ab3d5
+set $magenta    #a89bb9
+set $cyan	    #7bcdb4
+set $white	    #aaaaaa
+
+## colors                border      	background		text        	indicator
+client.focused          $background	$background	$foreground	$background
+client.focused_inactive $background   	$background  	$foreground 	$background
+client.unfocused        $background   	$background  	$foreground 	$background
+client.urgent           $background     $background   	$foreground 	$yellow  
+
+new_window pixel 0
+new_float pixel 8
+hide_edge_borders none
+focus_follows_mouse yes
+hide_edge_borders both
+
+# bar
+# bar {
+# 	position top
+# 	status_command i3blocks -c /home/nemesis/.config/i3/i3blocks.conf
+#   	#status_command i3status
+# 	separator_symbol " "
+# 	colors {
+# 		background $bg-color
+# 	    	separator #757575
+# 		#                  border             background         text
+# 		focused_workspace  $bg-color          $bg-color          $text-color
+# 		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+# 		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+# 	}
+# }
+
+
+
+ # bindsym $mod+shift+x exec ~/.lock.sh
+ bindsym $mod+shift+x exec lock --lock
+
+# Pulse Audio controls
+ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+# Media player controls
+ bindsym XF86AudioPlay exec playerctl play
+ bindsym XF86AudioPause exec playerctl pause
+ bindsym XF86AudioNext exec playerctl next
+ bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+
+
+#Wallpaper
+# exec_always feh --bg-scale ~/Dropbox/Apps/Desktoppr/blue-earth-wallpaper.jpg
+exec_always feh --bg-scale ~/Untitled.png 
+exec_always compton --config ~/.config/i3/compton.conf
+exec /home/nemesis/.start_conky.sh
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 300 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
+
+exec setxkbmap -option ctrl:nocaps
+exec xcape -e 'Control_L=Escape' -t 175
+#exec --no-startup-id nm-applet
+exec --no-startup-id dropbox start
+# Setting Mouse Accelaration
+exec xset m 1 1
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always  xautolock -time 3 -locker 'lock -l dim'
+bindsym $mod+Shift+f exec ~/.config/i3/scripts/focus.py
+
+for_window [class="^feh$"] floating enable, border none
