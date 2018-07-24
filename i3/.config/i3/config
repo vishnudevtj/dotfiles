@@ -212,8 +212,8 @@ hide_edge_borders both
 
 
 
- # bindsym $mod+shift+x exec ~/.lock.sh
- bindsym $mod+shift+x exec lock --lock
+ bindsym $mod+shift+x exec ~/.lock.sh
+ # bindsym $mod+shift+x exec lock --lock
 
 # Pulse Audio controls
  bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
@@ -232,12 +232,16 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 
 #Wallpaper
 # exec_always feh --bg-scale ~/Dropbox/Apps/Desktoppr/blue-earth-wallpaper.jpg
-exec_always feh --bg-scale ~/Untitled.png 
+# exec_always feh --bg-scale ~/Dropbox/Pictures/touka.png
+# exec_always feh --bg-scale ~/Dropbox/Pictures/tokyo_ghoul_kaneki_ken_man_mask_red_eyes_white_hair_100605_1366x768.jpg
+exec_always feh --bg-scale ~/Dropbox/Pictures/osx_hero_2x.jpg
 exec_always compton --config ~/.config/i3/compton.conf
 exec /home/nemesis/.start_conky.sh
 bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 300 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
 
 exec setxkbmap -option ctrl:nocaps
+exec gnome-settings-daemon
+exec nm-applet
 exec xcape -e 'Control_L=Escape' -t 175
 #exec --no-startup-id nm-applet
 exec --no-startup-id dropbox start

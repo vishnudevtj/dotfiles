@@ -93,6 +93,7 @@ source $ZSH/oh-my-zsh.sh
  #
  alias gdb="gdb --silent "
  alias tmux="tmux -u "
+ alias f=emacsclient-one-frame
 
  eval $(dircolors ~/.dircolors)
 
@@ -100,3 +101,4 @@ source $ZSH/oh-my-zsh.sh
 
  export EDITOR='vim'
  export SHELL='/bin/zsh'
+ export PATH=$PATH:"$HOME/.local/bin":

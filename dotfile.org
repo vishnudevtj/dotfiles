@@ -1,0 +1,1715 @@
+* My Dotfile
+** i3
+*** Configuration
+#+BEGIN_SRC conf :tangle ~/dotfiles/i3/.config/i3/config
+set $mod Mod4
+smart_gaps on
+
+for_window [class=".*"] border pixel 2
+gaps inner 8
+gaps outer 0
+font pango:Noto Sans 10.5
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+floating_maximum_size 1300 x 700
+# start a terminal
+bindsym $mod+Return  [class="Termite"] border pixel 15 , exec termite 
+#bindsym $mod+Return exec tilda
+
+assign [class="Emacs"] $workspace1
+for_window [class="Firefox-ers"] border pixel 1
+for_window [class='(?i)termite']  border pixel 15
+
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+
+bindsym $mod+Ctrl+Right move workspace to output right
+bindsym $mod+Ctrl+Left move workspace to output left
+bindsym $mod+Ctrl+Up move workspace to output up
+bindsym $mod+Ctrl+Down move workspace to output down
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+workspace_auto_back_and_forth yes
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "0"
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5 
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+
+exec --no-startup-id i3-msg 'workspace$workspace4; exec mpd  ;exec termite -e  'ncmpcpp';exec termite  -e 'cava''
+exec --no-startup-id i3-msg 'workspace $workspace2; exec firefox'
+exec --no-startup-id i3-msg 'exec emacs'
+exec --no-startup-id i3-msg 'workspace $workspace10'
+
+# exec --no-startup-id i3-msg 'workspace $workspace10;exec sleep 10s; exec termite -e 'glances' ; workspace $workspace1'
+
+Bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3/ inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+mode "gaps" {
+        bindsym Down gaps inner all minus 1
+        bindsym Left gaps outer all minus 1
+        bindsym Up gaps inner all plus 1
+        bindsym Right gaps outer all plus 1
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Tab    mode "default"
+}
+
+bindsym $mod+g mode "gaps"
+
+
+set $background #242730
+set $foreground #bfbfbf
+set $black      #5b4848
+set $red	    #cb6077
+set $green		#bec55b
+set $yellow		#e4bc87
+set $blue		#8ab3d5
+set $magenta    #a89bb9
+set $cyan	    #7bcdb4
+set $white	    #aaaaaa
+
+## colors                border      	background		text        	indicator
+client.focused          $background	$background	$foreground	$background
+client.focused_inactive $background   	$background  	$foreground 	$background
+client.unfocused        $background   	$background  	$foreground 	$background
+client.urgent           $background     $background   	$foreground 	$yellow  
+
+new_window pixel 0
+new_float pixel 8
+hide_edge_borders none
+focus_follows_mouse yes
+hide_edge_borders both
+
+# bar
+# bar {
+# 	position top
+# 	status_command i3blocks -c /home/nemesis/.config/i3/i3blocks.conf
+#   	#status_command i3status
+# 	separator_symbol " "
+# 	colors {
+# 		background $bg-color
+# 	    	separator #757575
+# 		#                  border             background         text
+# 		focused_workspace  $bg-color          $bg-color          $text-color
+# 		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+# 		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+# 	}
+# }
+
+
+
+ bindsym $mod+shift+x exec ~/.lock.sh
+ # bindsym $mod+shift+x exec lock --lock
+
+# Pulse Audio controls
+ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+# Media player controls
+ bindsym XF86AudioPlay exec playerctl play
+ bindsym XF86AudioPause exec playerctl pause
+ bindsym XF86AudioNext exec playerctl next
+ bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+
+
+#Wallpaper
+# exec_always feh --bg-scale ~/Dropbox/Apps/Desktoppr/blue-earth-wallpaper.jpg
+# exec_always feh --bg-scale ~/Dropbox/Pictures/touka.png
+# exec_always feh --bg-scale ~/Dropbox/Pictures/tokyo_ghoul_kaneki_ken_man_mask_red_eyes_white_hair_100605_1366x768.jpg
+exec_always feh --bg-scale ~/Dropbox/Pictures/osx_hero_2x.jpg
+exec_always compton --config ~/.config/i3/compton.conf
+exec /home/nemesis/.start_conky.sh
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 300 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
+
+exec setxkbmap -option ctrl:nocaps
+exec gnome-settings-daemon
+exec nm-applet
+exec xcape -e 'Control_L=Escape' -t 175
+#exec --no-startup-id nm-applet
+exec --no-startup-id dropbox start
+# Setting Mouse Accelaration
+exec xset m 1 1
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always  xautolock -time 3 -locker 'lock -l dim'
+bindsym $mod+Shift+f exec ~/.config/i3/scripts/focus.py
+
+for_window [class="^feh$"] floating enable, border none
+
+
+#+END_SRC
+*** i3blocks
+Scripts are located in the folder ~/.config/i3/scripts
+#+BEGIN_SRC conf :tangle ~/.config/i3/i3blocks.conf
+#command=$SCRIPT_DIR/$BLOCK_NAME
+command=~/.config/i3/scripts/$BLOCK_NAME
+color=#676E7D
+separator_block_width=15
+markup=none
+
+[song]
+command=ncmpcpp --current-song='{{ %t}}|{%f}'
+label=
+interval=1
+#color=#2ebd59
+
+
+[bandwidth]
+label=
+interval=1
+
+
+[ip-address]
+label=
+interval=60
+
+
+[network]
+label=
+instance=wlp3s0
+interval=10
+
+
+
+# [disk]
+# interval=1
+# label=
+
+
+
+[load]
+label=
+interval=1
+
+[battery]
+label=
+instance=0
+interval=5
+[audio]
+label=
+interval=5
+[date]
+command=date '+%b %d %H:%M'
+interval=1
+label=
+
+#+END_SRC
+*** i3lock
+#+BEGIN_SRC sh :tangle ~/.lock.sh
+#!/bin/bash
+scrot /tmp/screen.png
+mogrify -blur 0x3 /tmp/screen.png
+icon="$HOME/.lock_icon.png"
+if [ -f $icon ]; then
+     composite -gravity center $HOME/.lock_icon.png /tmp/screen.png /tmp/screen.png
+    
+ fi
+ i3lock -u -i /tmp/screen.png
+ rm /tmp/screen.*
+#+END_SRC
+*** Xresources
+#+BEGIN_SRC conf :tangle ~/dotfiles/bash/.Xresources
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+
+rofi.fullscreen:                     true
+!rofi.width:                          50
+!rofi.lines:                          10
+!rofi.padding:                        250
+rofi.font:                           Overpass Light 16
+! State:                             BG        FG      BGalt     HLBG    HLFg
+rofi.color-normal:                   #00000000,#dedede,#00000000,#00000000,#3083ae
+rofi.color-urgent:                   #00000000,#dedede,#00000000,#00000000,#cc0000
+rofi.color-active:                   #00000000,#dedede,#00000000,#00000000,#3083ae
+!                                    BG        Border  Sep
+rofi.color-window:                   #e5000000,#000000,#dedede
+rofi.bw:                             0
+rofi.location:                       0
+rofi.fixed-num-lines:                true
+!rofi.terminal:                       termite -e 
+! "Use levenshtein sorting" Set from: Default
+!rofi.levenshtein-sort:               true
+rofi.case-sensitive:                 false
+! "Set the matching algorithm. (normal, regex, glob, fuzzy)" Set from: Default
+rofi.matching:                       fuzzy
+! rofi.line-margin:                    2
+! rofi.line-padding:                   1
+rofi.separator-style:                none
+rofi.hide-scrollbar:                 true
+rofi.fake-transparency:              false
+! "Scrolling method. (0: Page, 1: Centered)" Set from: Default
+rofi.scroll-method:                  1
+! hotkeys
+! remove conflicting shortcuts
+rofi.kb-accept-entry:                Return
+rofi.kb-remove-to-eol:
+rofi.kb-row-up:                      Up,Control+k
+rofi.kb-row-down:                    Down,Control+j
+#+END_SRC
+
+*** Compton
+#+BEGIN_SRC conf :tangle ~/dotfiles/i3/.config/i3/compton.conf
+#################################
+#
+# Backend
+#
+#################################
+
+# Backend to use: "xrender" or "glx".
+# GLX backend is typically much faster but depends on a sane driver.
+backend = "glx";
+
+#################################
+#
+# GLX backend
+#
+#################################
+
+glx-no-stencil = true;
+
+# GLX backend: Copy unmodified regions from front buffer instead of redrawing them all.
+# My tests with nvidia-drivers show a 10% decrease in performance when the whole screen is modified,
+# but a 20% increase when only 1/4 is.
+# My tests on nouveau show terrible slowdown.
+# Useful with --glx-swap-method, as well.
+glx-copy-from-front = false;
+
+# GLX backend: Use MESA_copy_sub_buffer to do partial screen update.
+# My tests on nouveau shows a 200% performance boost when only 1/4 of the screen is updated.
+# May break VSync and is not available on some drivers.
+# Overrides --glx-copy-from-front.
+# glx-use-copysubbuffermesa = true;
+
+# GLX backend: Avoid rebinding pixmap on window damage.
+# Probably could improve performance on rapid window content changes, but is known to break things on some drivers (LLVMpipe).
+# Recommended if it works.
+# glx-no-rebind-pixmap = true;
+
+
+# GLX backend: GLX buffer swap method we assume.
+# Could be undefined (0), copy (1), exchange (2), 3-6, or buffer-age (-1).
+# undefined is the slowest and the safest, and the default value.
+# copy is fastest, but may fail on some drivers,
+# 2-6 are gradually slower but safer (6 is still faster than 0).
+# Usually, double buffer means 2, triple buffer means 3.
+# buffer-age means auto-detect using GLX_EXT_buffer_age, supported by some drivers.
+# Useless with --glx-use-copysubbuffermesa.
+# Partially breaks --resize-damage.
+# Defaults to undefined.
+glx-swap-method = "undefined";
+
+#################################
+#
+# Shadows
+#
+#################################
+
+# Enabled client-side shadows on windows.
+shadow = true;
+# Don't draw shadows on DND windows.
+no-dnd-shadow = true;
+# Avoid drawing shadows on dock/panel windows.
+no-dock-shadow = true;
+# Zero the part of the shadow's mask behind the window. Fix some weirdness with ARGB windows.
+clear-shadow = true;
+# The blur radius for shadows. (default 12)
+shadow-radius = 5;
+# The left offset for shadows. (default -15)
+shadow-offset-x = -5;
+# The top offset for shadows. (default -15)
+shadow-offset-y = -5;
+# The translucency for shadows. (default .75)
+shadow-opacity = .5;
+
+# Set if you want different colour shadows
+# shadow-red = 0.0;
+# shadow-green = 0.0;
+# shadow-blue = 0.0;
+
+# The shadow exclude options are helpful if you have shadows enabled. Due to the way compton draws its shadows, certain applications will have visual glitches
+# (most applications are fine, only apps that do weird things with xshapes or argb are affected).
+# This list includes all the affected apps I found in my testing. The "! name~=''" part excludes shadows on any "Unknown" windows, this prevents a visual glitch with the XFWM alt tab switcher.
+shadow-exclude = [
+    "! name~=''",
+    "name = 'Notification'",
+    "name = 'Plank'",
+    "name = 'Docky'",
+    "name = 'Kupfer'",
+    "name = 'xfce4-notifyd'",
+    "name *= 'VLC'",
+    "name *= 'compton'",
+    "name *= 'Chromium'",
+    "name *= 'Chrome'",
+    "class_g = 'Conky'",
+    "class_g = 'Kupfer'",
+    "class_g = 'Synapse'",
+    "class_g ?= 'Notify-osd'",
+    "class_g ?= 'Cairo-dock'",
+    "class_g ?= 'Xfce4-notifyd'",
+    "class_g ?= 'Xfce4-power-manager'",
+    "_GTK_FRAME_EXTENTS@:c"
+];
+# Avoid drawing shadow on all shaped windows (see also: --detect-rounded-corners)
+shadow-ignore-shaped = false;
+
+#################################
+#
+# Opacity
+#
+#################################
+
+menu-opacity = 1;
+inactive-opacity = 1;
+active-opacity = 1;
+frame-opacity = 1;
+inactive-opacity-override = false;
+alpha-step = 0.06;
+
+# Dim inactive windows. (0.0 - 1.0)
+inactive-dim = 0.2;
+# Do not let dimness adjust based on window opacity.
+# inactive-dim-fixed = true;
+# Blur background of transparent windows. Bad performance with X Render backend. GLX backend is preferred.
+# blur-background = true;
+# Blur background of opaque windows with transparent frames as well.
+# blur-background-frame = true;
+# Do not let blur radius adjust based on window opacity.
+blur-background-fixed = false;
+blur-background-exclude = [
+    "window_type = 'dock'",
+    "window_type = 'desktop'"
+];
+
+#################################
+#
+# Fading
+#
+#################################
+
+# Fade windows during opacity changes.
+fading = true;
+# The time between steps in a fade in milliseconds. (default 10).
+fade-delta = 4;
+# Opacity change between steps while fading in. (default 0.028).
+fade-in-step = 0.03;
+# Opacity change between steps while fading out. (default 0.03).
+fade-out-step = 0.03;
+# Fade windows in/out when opening/closing
+# no-fading-openclose = true;
+
+# Specify a list of conditions of windows that should not be faded.
+fade-exclude = [ ];
+
+#################################
+#
+# Other
+#
+#################################
+
+# Try to detect WM windows and mark them as active.
+mark-wmwin-focused = true;
+# Mark all non-WM but override-redirect windows active (e.g. menus).
+mark-ovredir-focused = true;
+# Use EWMH _NET_WM_ACTIVE_WINDOW to determine which window is focused instead of using FocusIn/Out events.
+# Usually more reliable but depends on a EWMH-compliant WM.
+use-ewmh-active-win = true;
+# Detect rounded corners and treat them as rectangular when --shadow-ignore-shaped is on.
+detect-rounded-corners = true;
+
+# Detect _NET_WM_OPACITY on client windows, useful for window managers not passing _NET_WM_OPACITY of client windows to frame windows.
+# This prevents opacity being ignored for some apps.
+# For example without this enabled my xfce4-notifyd is 100% opacity no matter what.
+detect-client-opacity = true;
+
+# Specify refresh rate of the screen.
+# If not specified or 0, compton will try detecting this with X RandR extension.
+refresh-rate = 0;
+
+# Set VSync method. VSync methods currently available:
+# none: No VSync
+# drm: VSync with DRM_IOCTL_WAIT_VBLANK. May only work on some drivers.
+# opengl: Try to VSync with SGI_video_sync OpenGL extension. Only work on some drivers.
+# opengl-oml: Try to VSync with OML_sync_control OpenGL extension. Only work on some drivers.
+# opengl-swc: Try to VSync with SGI_swap_control OpenGL extension. Only work on some drivers. Works only with GLX backend. Known to be most effective on many drivers. Does not actually control paint timing, only buffer swap is affected, so it doesn’t have the effect of --sw-opti unlike other methods. Experimental.
+# opengl-mswc: Try to VSync with MESA_swap_control OpenGL extension. Basically the same as opengl-swc above, except the extension we use.
+# (Note some VSync methods may not be enabled at compile time.)
+vsync = "opengl-swc";
+
+# Enable DBE painting mode, intended to use with VSync to (hopefully) eliminate tearing.
+# Reported to have no effect, though.
+dbe = false;
+# Painting on X Composite overlay window. Recommended.
+paint-on-overlay = true;
+
+# Limit compton to repaint at most once every 1 / refresh_rate second to boost performance.
+# This should not be used with --vsync drm/opengl/opengl-oml as they essentially does --sw-opti's job already,
+# unless you wish to specify a lower refresh rate than the actual value.
+sw-opti = true;
+
+# Unredirect all windows if a full-screen opaque window is detected, to maximize performance for full-screen windows, like games.
+# Known to cause flickering when redirecting/unredirecting windows.
+# paint-on-overlay may make the flickering less obvious.
+unredir-if-possible = true;
+
+# Specify a list of conditions of windows that should always be considered focused.
+focus-exclude = [ ];
+
+# Use WM_TRANSIENT_FOR to group windows, and consider windows in the same group focused at the same time.
+detect-transient = true;
+# Use WM_CLIENT_LEADER to group windows, and consider windows in the same group focused at the same time.
+# WM_TRANSIENT_FOR has higher priority if --detect-transient is enabled, too.
+detect-client-leader = true;
+
+#################################
+#
+# Window type settings
+#
+#################################
+
+wintypes:
+{
+    tooltip =
+    {
+        # fade: Fade the particular type of windows.
+        fade = true;
+        # shadow: Give those windows shadow
+        shadow = false;
+        # opacity: Default opacity for the type of windows.
+        opacity = 0.85;
+        # focus: Whether to always consider windows of this type focused.
+        focus = true;
+    };
+};
+#+END_SRC
+** Bash
+*** BashRC
+#+BEGIN_SRC conf :tangle ~/.bashrc
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    ,*i*) ;;
+      ,*) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+,*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -l'
+alias gdb='gdb -quiet'
+alias la='ls -A'
+#alias l='ls -CF'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+# neofetch --image ~/Pictures/bi0s_name.png --size 300px
+
+neofetch
+export PS1=" \[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;82m\]\u@\h\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;15m\]:\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;39m\]\w\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+
+function download_package(){
+if test -z $*
+then
+    echo "Usage : $0 <package_name>"
+else
+    echo "Downloading Packages ..."
+    sudo apt install --yes --print-uris $1 | grep \' | cut -d"'" -f2 | wget -q --show-progress  -i -
+    sudo mv *.deb /var/cache/apt/archives/
+fi
+}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#+END_SRC
+** SystemD
+#+BEGIN_SRC conf ~/dotfiles/emacs/.config/systemd/user/emacs.service
+[Unit]
+Description=Emacs Daemon
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon
+ExecStop=/usr/bin/emacsclient --eval "(progn (setq kill-emacs-hook 'nil) (kill-emacs))"
+Restart=always
+
+[Install]
+WantedBy=default.target
+#+END_SRC
+
+** Neofetch
+#+BEGIN_SRC conf :tangle ~/.config/neofetch/config
+
+#!/usr/bin/env bash
+#
+# Neofetch config file
+# https://github.com/dylanaraps/neofetch
+
+# Speed up script by not using unicode
+export LC_ALL=C
+export LANG=C
+# See this wiki page for more info:
+# https://github.com/dylanaraps/neofetch/wiki/Customizing-Info
+print_info() {
+    info underline
+
+    info "OS" distro
+    info "Model" model
+    info "Kernel" kernel
+    info "Uptime" uptime
+    info "Packages" packages
+    info "Shell" shell
+    info "Resolution" resolution
+    info "DE" de
+    info "WM" wm
+    info "WM Theme" wm_theme
+    info "Theme" theme
+    info "Icons" icons
+    info "Terminal" term
+    info "Terminal Font" term_font
+    info "CPU" cpu
+    info "GPU" gpu
+    info "Memory" memory
+
+    # info "CPU Usage" cpu_usage
+    # info "Disk" disk
+    # info "Battery" battery
+    # info "Font" font
+    # info "Song" song
+    # info "Local IP" local_ip
+    # info "Public IP" public_ip
+    # info "Users" users
+    # info "Birthday" birthday
+
+    info line_break
+    info cols
+    info line_break
+}
+
+
+# Kernel
+
+
+# Shorten the output of the kernel function.
+#
+# Default:  'on'
+# Values:   'on', 'off'
+# Flag:     --kernel_shorthand
+# Supports: Everything except *BSDs (except PacBSD and PC-BSD)
+#
+# Example:
+# on:  '4.8.9-1-ARCH'
+# off: 'Linux 4.8.9-1-ARCH'
+kernel_shorthand="on"
+
+
+# Distro
+
+
+# Shorten the output of the distro function
+#
+# Default:  'off'
+# Values:   'on', 'off', 'tiny'
+# Flag:     --distro_shorthand
+# Supports: Everything except Windows and Haiku
+distro_shorthand="off"
+
+# Show/Hide OS Architecture.
+# Show 'x86_64', 'x86' and etc in 'Distro:' output.
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --os_arch
+#
+# Example:
+# on:  'Arch Linux x86_64'
+# off: 'Arch Linux'
+os_arch="on"
+
+
+# Uptime
+
+
+# Shorten the output of the uptime function
+#
+# Default: 'off'
+# Values:  'on', 'off', 'tiny'
+# Flag:    --uptime_shorthand
+#
+# Example:
+# on:   '2 days, 10 hours, 3 mins'
+# off:  '2 days, 10 hours, 3 minutes'
+# tiny: '2d 10h 3m'
+uptime_shorthand="off"
+
+
+# Shell
+
+
+# Show the path to $SHELL
+#
+# Default: 'off'
+# Values:  'on', 'off'
+# Flag:    --shell_path
+#
+# Example:
+# on:  '/bin/bash'
+# off: 'bash'
+shell_path="off"
+
+# Show $SHELL version
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --shell_version
+#
+# Example:
+# on:  'bash 4.4.5'
+# off: 'bash'
+shell_version="on"
+
+
+# CPU
+
+
+# CPU speed type
+#
+# Default: 'bios'
+# Values:  'current', 'min', 'max', 'bios',
+# Flag:    --speed_type
+# Supports: Linux with 'cpufreq'
+speed_type="bios"
+
+# Shorten the output of the CPU function
+#
+# Default: 'off'
+# Values:  'on', 'off', 'tiny', 'name', 'speed'
+# Flag:    --cpu_shorthand
+#
+# Example:
+# on:    'i7-6500U (4) @ 3.1GHz'
+# off:   'Intel i7-6500U (4) @ 3.1GHz'
+# tiny:  'i7-6500U (4)'
+# name:  'Intel i7-6500U (4)'
+# speed: '3.1GHz'
+cpu_shorthand="off"
+
+# CPU Speed
+# Hide/Show CPU speed.
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --cpu_speed
+#
+# Example:
+# on:  'Intel i7-6500U (4) @ 3.1GHz'
+# off: 'Intel i7-6500U (4)'
+cpu_speed="on"
+
+# CPU Cores
+# Display CPU cores in output
+#
+# Default: 'logical'
+# Values:  'logical', 'physical', 'off'
+# Flag:    --cpu_cores
+# Support: 'physical' doesn't work on BSD.
+#
+# Example:
+# logical:  'Intel i7-6500U (4) @ 3.1GHz' (All virtual cores)
+# physical: 'Intel i7-6500U (2) @ 3.1GHz' (All physical cores)
+# off:      'Intel i7-6500U @ 3.1GHz'
+cpu_cores="logical"
+
+# CPU Temperature
+# Hide/Show CPU temperature.
+# Note the temperature is added to the regular CPU function.
+#
+# Default: 'off'
+# Values:  'on', 'off'
+# Flag:    --cpu_temp
+# Supports: Linux
+#
+# Example:
+# on:  'Intel i7-6500U (4) @ 3.1GHz [27.2°C]'
+# off: 'Intel i7-6500U (4) @ 3.1GHz'
+cpu_temp="off"
+
+
+# GPU
+
+
+# Enable/Disable GPU Brand
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --gpu_brand
+#
+# Example:
+# on:  'AMD HD 7950'
+# off: 'HD 7950'
+gpu_brand="on"
+
+
+# Resolution
+
+
+# Display refresh rate next to each monitor
+# Default: 'off'
+# Values:  'on', 'off'
+# Flag:    --refresh_rate
+# Supports: Doesn't work on Windows.
+#
+# Example:
+# on:  '1920x1080 @ 60Hz'
+# off: '1920x1080'
+refresh_rate="off"
+
+
+# Gtk Theme / Icons / Font
+
+
+# Shorten output of GTK Theme / Icons / Font
+#
+# Default: 'off'
+# Values:  'on', 'off'
+# Flag:    --gtk_shorthand
+#
+# Example:
+# on:  'Numix, Adwaita'
+# off: 'Numix [GTK2], Adwaita [GTK3]'
+gtk_shorthand="off"
+
+
+# Enable/Disable gtk2 Theme / Icons / Font
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --gtk2
+#
+# Example:
+# on:  'Numix [GTK2], Adwaita [GTK3]'
+# off: 'Adwaita [GTK3]'
+gtk2="on"
+
+# Enable/Disable gtk3 Theme / Icons / Font
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --gtk3
+#
+# Example:
+# on:  'Numix [GTK2], Adwaita [GTK3]'
+# off: 'Numix [GTK2]'
+gtk3="on"
+
+
+# IP Address
+
+
+# Website to ping for the public IP
+#
+# Default: 'http://ident.me'
+# Values:  'url'
+# Flag:    --ip_host
+public_ip_host="http://ident.me"
+
+
+# Song
+
+
+# Print the Artist and Title on seperate lines
+#
+# Default: 'off'
+# Values:  'on', 'off'
+# Flag:    --song_shorthand
+#
+# Example:
+# on:  'Artist: The Fratellis'
+#      'Song: Chelsea Dagger'
+#
+# off: 'Song: The Fratellis - Chelsea Dagger'
+song_shorthand="off"
+
+
+# Birthday
+
+
+# Shorten the output of the Birthday functon.
+#
+# Default:  'off'
+# Values:   'on', 'off'
+# Flag:     --birthday_shorthand
+# Supports: 'off' doesn't work on OpenBSD and NetBSD.
+#
+# Example:
+# on:  'Thu 14 Apr 2016 11:50 PM'
+# off: '2016-04-14 23:50:55'
+birthday_shorthand="off"
+
+# Whether to show the time in the output
+#
+# Default:  'on'
+# Values:   'on', 'off'
+# Flag:     --birthday_time
+#
+# Example:
+# on:  'Thu 14 Apr 2016 11:50 PM'
+# off: 'Thu 14 Apr 2016'
+birthday_time="on"
+
+# Date format to use when printing birthday
+#
+# Default:  '+%a %d %b %Y %l:%M %p'
+# Values:   'date format'
+# Flag:     --birthday_format
+birthday_format="+%a %d %b %Y %l:%M %p"
+
+
+# Text Colors
+
+
+# Text Colors
+#
+# Default:  'distro'
+# Values:   'distro', 'num' 'num' 'num' 'num' 'num' 'num'
+# Flag:     --colors
+#
+# Each number represents a different part of the text in
+# this order: 'title', '@', 'underline', 'subtitle', 'colon', 'info'
+#
+# Example:
+# colors=(distro)      - Text is colored based on Distro colors.
+# colors=(4 6 1 8 8 6) - Text is colored in the order above.
+#colors=(distro)
+colors=(4 6 1 8 8 6)
+
+
+# Text Options
+
+
+# Toggle bold text
+#
+# Default:  'on'
+# Values:   'on', 'off'
+# Flag:     --bold
+bold="on"
+
+# Enable/Disable Underline
+#
+# Default:  'on'
+# Values:   'on', 'off'
+# Flag:     --underline
+underline_enabled="on"
+
+# Underline character
+#
+# Default:  '-'
+# Values:   'string'
+# Flag:     --underline_char
+underline_char="-"
+
+
+# Color Blocks
+
+
+# Color block range
+# Start/End refer to the range of colors
+# to print in the blocks.
+#
+# Default:  '0', '7'
+# Values:   'num'
+# Flag:     --block_range
+#
+# Example:
+#
+# Display colors 0-7 in the blocks.
+# neofetch --block_range 0 7
+#
+# Display colors 0-15 in the blocks.
+# neofetch --block_range 0 15
+start=0
+end=7
+
+# Toggle color blocks
+#
+# Default:  'on'
+# Values:   'on', 'off'
+# Flag:     --color_blocks
+color_blocks="off"
+
+# Color block width in spaces
+#
+# Default:  '3'
+# Values:   'num'
+# Flag:     --block_width
+block_width=3
+
+# Color block height in lines
+#
+# Default:  '1'
+# Values:   'num'
+# Flag:     --block_height
+block_height=1
+
+
+# Progress Bars
+
+
+# Bar characters
+#
+# Default:  '-', '='
+# Values:   'string', 'string'
+# Flag:     --bar_char
+#
+# Example:
+# neofetch --bar_char 'elapsed' 'total'
+# neofetch --bar_char '-' '='
+bar_char_elapsed="-"
+bar_char_total="="
+
+# Toggle Bar border
+#
+# Default:  'on'
+# Values:   'on', 'off'
+# Flag:     --bar_border
+bar_border="on"
+
+# Progress bar length in spaces
+# Number of chars long to make the progress bars.
+#
+# Default:  '15'
+# Values:   'num'
+# Flag:     --bar_length
+bar_length=15
+
+# Progress bar colors
+# When set to distro, uses your distro's logo colors.
+#
+# Default:  'distro', 'distro'
+# Values:   'distro', 'num'
+# Flag:     --bar_colors
+#
+# Example:
+# neofetch --bar_colors 3 4
+# neofetch --bar_colors distro 5
+bar_color_elapsed="distro"
+bar_color_total="distro"
+
+
+# Info display
+# Display a bar with the info.
+#
+# Default: 'off'
+# Values:  'bar', 'infobar', 'barinfo', 'off'
+# Flags:   --cpu_display
+#          --memory_display
+#          --battery_display
+#          --disk_display
+#
+# Example:
+# bar:     '[---=======]'
+# infobar: 'info [---=======]'
+# barinfo: '[---=======] info'
+# off:     'info'
+cpu_display="off"
+memory_display="off"
+battery_display="off"
+disk_display="off"
+
+
+# Image Options
+
+
+# Image Source
+#
+# Default:  'ascii'
+# Values:   'ascii', 'wallpaper', '/path/to/img', '/path/to/dir/', 'off'
+# Flag:     --image
+#
+# NOTE: Change this to 'wallpaper', '/path/to/img' or /path/to/dir/' to enable image mode. You can also launch neofetch with '--image wallpaper' and etc.
+image_source="ascii"
+
+# Thumbnail directory
+#
+# Default: '~/.cache/thumbnails/neofetch'
+# Values:  'dir'
+thumbnail_dir="${XDG_CACHE_HOME:-${HOME}/.cache}/thumbnails/neofetch"
+
+# w3m-img path
+# Only works with the w3m backend.
+#
+# NOTE: Only change this if "neofetch -v" says that it "couldn't find w3m-img".
+# Neofetch has a function that automatically finds w3m-img for you. It looks
+# in the following directories:
+#    /usr/lib/w3m/w3mimgdisplay
+#    /usr/libexec/w3m/w3mimgdisplay
+#    /usr/lib64/w3m/w3mimgdisplay
+#    /usr/libexec64/w3m/w3mimgdisplay
+# If w3m-img is installed elsewhere on your system, open an issue on the repo
+# and I'll add it to the function inside the script. If w3m-img is installed
+# in a non-standard way (in your home folder, etc) then change the variable
+# below to the custom location. Otherwise, don't touch this.
+w3m_img_path="/usr/lib/w3m/w3mimgdisplay"
+
+# Crop mode
+#
+# Default:  'normal'
+# Values:   'normal', 'fit', 'fill'
+# Flag:     --crop_mode
+#
+# See this wiki page to learn about the fit and fill options.
+# https://github.com/dylanaraps/neofetch/wiki/What-is-Waifu-Crop%3F
+crop_mode="normal"
+
+# Crop offset
+# Note: Only affects 'normal' crop mode.
+#
+# Default:  'center'
+# Values:   'northwest', 'north', 'northeast', 'west', 'center'
+#           'east', 'southwest', 'south', 'southeast'
+# Flag:     --crop_offset
+crop_offset="center"
+
+# Image size
+# The image is half the terminal width by default.
+#
+# Default: 'auto'
+# Values:  'auto', '00px', '00%', 'none'
+# Flags:   --image_size
+#          --size
+image_size="auto"
+
+# Ggap between image and text
+#
+# Default: '3'
+# Values:  'num', '-num'
+# Flag:    --gap
+gap=3
+
+# Image offsets
+# Only works with the w3m backend.
+#
+# Default: '0'
+# Values:  'px'
+# Flags:   --xoffset
+#          --yoffset
+yoffset=0
+xoffset=0
+
+# Image background color
+# Only works with the w3m backend.
+#
+# Default: ''
+# Values:  'color', 'blue'
+# Flag:    --bg_color
+background_color=
+
+
+# Ascii Options
+
+
+# Default ascii image to use
+# When this is set to distro it will use your
+# distro's logo as the ascii.
+#
+# Default: 'distro'
+# Values:  'distro', '/path/to/ascii_file'
+# Flag:    --ascii
+ascii="distro"
+
+# Ascii distro
+# Which distro's ascii art to display.
+#
+# Default: 'auto'
+# Values:  'auto', 'distro_name'
+# Flag:    --ascii_distro
+#
+# NOTE: Arch and Ubuntu have 'old' logo varients.
+#       Change this to 'arch_old' or 'ubuntu_old' to use the old logos.
+# NOTE: Ubuntu has flavor varients.
+#       Change this to 'Lubuntu', 'Xubuntu', 'Ubuntu-GNOME' or 'Ubuntu-Budgie' to use the flavors.
+ascii_distro="auto"
+
+# Ascii Colors
+#
+# Default:  'distro'
+# Values:   'distro', 'num' 'num' 'num' 'num' 'num' 'num'
+# Flag:     --ascii_colors
+#
+# Example:
+# ascii_colors=(distro)      - Ascii is colored based on Distro colors.
+# ascii_colors=(4 6 1 8 8 6) - Ascii is colored using these colors.
+ascii_colors=(distro)
+
+# Logo size
+# Arch, Crux and Gentoo have a smaller logo
+# variant. Changing the value below to small
+# will make neofetch use the small logo.
+#
+# Default: 'normal'
+# Values:  'normal', 'small'
+# Flag:    --ascii_logo_size
+ascii_logo_size="normal"
+
+# Bold ascii logo
+# Whether or not to bold the ascii logo.
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --ascii_bold
+ascii_bold="on"
+
+
+# Scrot Options
+
+
+# Whether or not to always take a screenshot
+# You can manually take a screenshot with "--scrot" or "-s"
+#
+# Default: 'off'
+# Values:  'on', 'off'
+# Flags:   --scrot
+#          -s
+scrot="off"
+
+# Screenshot Program
+# Neofetch will automatically use whatever screenshot tool
+# is installed on your system.
+#
+# If 'neofetch -v' says that it couldn't find a screenshot
+# tool or you're using a custom tool then you can change
+# the option below to a custom command.
+#
+# Default: 'auto'
+# Values:  'auto' 'cmd -flags'
+# Flag:    --scrot_cmd
+scrot_cmd="auto"
+
+# Screenshot Directory
+# Where to save the screenshots
+#
+# Default: '~/Pictures/'
+# Values:  'dir'
+# Flag:    --scrot_dir
+#
+# Note: Neofetch won't create the directory if it doesn't exist.
+scrot_dir="$HOME/Pictures/"
+
+# Screenshot Filename
+# What to name the screenshots
+#
+# Default: 'neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png'
+# Values:  'string'
+# Flag:    --scrot_name
+scrot_name="neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png"
+
+# Image upload host
+# Where to upload the image.
+#
+# Default: 'teknik'
+# Values:  'imgur', 'teknik'
+# Flag:    --image_host
+#
+# NOTE: If you'd like another image host to be added to Neofetch.
+#       Open an issue on github.
+image_host="teknik"
+
+
+# Config Options
+
+
+# Enable/Disable config file
+#
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --config
+# --config off, none
+#
+# Note: This option is only used when neofetch sources this config
+# as a default config and NOT as a user config. Changing this in
+# your user config won't actually do anything.
+config="on"
+
+# Path to custom config file location
+#
+# Default: '${XDG_CONFIG_HOME:-${HOME}/.config}/neofetch/config'
+# Values:  '/path/to/config'
+# Flag:    --config_file
+#
+# Note: This option is only used when neofetch sources this config
+# as a default config and NOT as a user config. Changing this in
+# your user config won't actually do anything.
+config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/neofetch/config"
+#+END_SRC
+** Music Player Deamon
+#+BEGIN_SRC conf :tangle  ~/.config/mpd/mpd.conf
+music_directory    "~/Music"
+playlist_directory "~/.config/mpd/playlists"
+pid_file           "~/.config/mpd/pid"
+state_file         "~/.config/mpd/state"
+sticker_file       "~/.config/mpd/sticker.sql"
+
+db_file            "~/.config/mpd/database"
+log_file           "~/.config/mpd/log"
+
+audio_output {
+        type            "alsa"
+        name            "Sound Card"
+        mixer_type      "software"      # optional
+}
+audio_output {
+    type                    "fifo"
+    name                    "my_fifo"
+    path                    "/tmp/mpd.fifo"
+    format                  "44100:16:2"
+}
+
+
+port "6601"
+#+END_SRC
+*** Ncmpcpp
+#+BEGIN_SRC conf :tangle ~/.ncmpcpp/config
+
+% egrep -v '^#' .ncmpcpp/config
+mpd_music_dir = "/home/user/Music"
+
+mpd_host = "127.0.0.1"
+mpd_port = "6601"
+mouse_list_scroll_whole_page = "yes"
+lines_scrolled = "1"
+
+visualizer_in_stereo = "no"
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30"
+visualizer_type = "wave_filled"
+
+#visualizer_look = "▉▋"
+#visualizer_look = "▋▋"
+#visualizer_look = "◆▋"
+#visualizer_look = "◈░"
+#visualizer_look = "││"
+#visualizer_look = "▀▋"
+#visualizer_look = "▀○"
+visualizer_look = "█▋"
+#visualizer_look = "██"
+
+message_delay_time = "3"
+playlist_shorten_total_times = "yes"
+playlist_display_mode = "classic"
+browser_display_mode = "columns"
+search_engine_display_mode = "columns"
+playlist_editor_display_mode = "columns"
+autocenter_mode = "yes"
+centered_cursor = "yes"
+user_interface = "alternative"
+follow_now_playing_lyrics = "yes"
+locked_screen_width_part = "60"
+display_bitrate = "no"
+external_editor = "nano"
+
+main_window_highlight_color = "white"
+
+progressbar_elapsed_color = "white"
+progressbar_color = "black"
+
+#progressbar_look = "▀▀▀"
+#progressbar_look = "▃▃▃"
+#progressbar_look = "▉▉▉"
+progressbar_look = "─⊙ "
+
+mouse_support = "yes"
+header_visibility = "no"
+statusbar_visibility = "no"
+
+statusbar_color = "white"
+visualizer_color = blue, cyan, green, yellow, magenta, red, white
+#visualizer_color = white
+#visualizer_color = blue, cyan, green, yellow, magenta, red, white,  red, magenta, yellow, green, cyan, blue
+
+titles_visibility = "no"
+enable_window_title = "yes"
+
+#now_playing_prefix = "$b$8»$2»$4»$3» "
+#now_playing_prefix = "$b$2⟩$3⟩"
+now_playing_prefix = "$b"
+#now_playing_prefix = "$b$7▶▷"
+now_playing_suffix = "$8$/b"
+
+song_columns_list_format = "(6)[]{} (23)[blue]{a} (26)[white]{t|f} (40)[cyan]{b} (4)[green]{l}"
+
+color1 = "white"
+color2 = "black"
+
+#song_list_format = "%l │ $8%t $R$7  $R$3%a "
+#song_list_format = "$7%l │ $2%a $7│ $8%t $R$7│ $5%b "
+#song_list_format = " $8[%t] $R$7%l "
+#song_list_format = " $8[%t] $7 »» $2[%a]$2 $R$7%l "
+#song_status_format = " $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
+song_list_format = "$8%l $8│ $7%t  $R$7%a"
+song_status_format = "$b$7♫ $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
+#+END_SRC
+** Conky
+My Conky Setup 
+
+Script to start both the conky setups
+#+BEGIN_SRC conf :tangle  ~/.start_conky.sh
+#!/bin/bash
+sleep 5s
+conky -d -c /home/nemesis/.config/conky/conky1.conkyrc &
+conky -d -c /home/nemesis/.config/conky/conky2.conkyrc &
+#+END_SRC
+
+#+BEGIN_SRC sh
+chmod +x ~/.start_conky.sh
+#+END_SRC
+
+Autostart on login
+#+BEGIN_SRC conf :tangle ~/.config/autostart/start-conky.desktop
+[Desktop Entry]
+Type=Application
+Exec=/home/nemesis/.start_conky.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=start-conky.desktop
+Name=conky
+Comment[en_US]=Conky setup
+#+END_SRC
+
+
+Both Conky Configuration
+
+#+BEGIN_SRC conf :tangle ~/dotfiles/conky/.config/conky/conky1.conkyrc
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 1
+total_run_times 0
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_colour 000000
+own_window_argb_visual yes
+own_window_argb_value 0
+
+double_buffer yes
+maximum_width 500
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+alignment bottom_left
+gap_x 10
+gap_y 0
+
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+use_spacer yes
+
+# default_color 504f5d
+# color1 504f5d
+# color2 504f5d
+
+default_color ffffff
+color1 ffffff
+color2 ffffff
+
+color3 
+color4
+color5
+
+minimum_size 260 250
+TEXT
+
+${voffset 60}${color1}${font Helvetica Neue:pixelsize=90}${time %I:%M}${font}
+${voffset -60}${offset 260}${color2}${font Lato:thin:pixelsize=22}${time %d} ${time  %B} ${time %Y}
+${font}${voffset -5}${offset 260}${font Distortion Dos Digital:pixelsize=28}${time %A}${font}
+
+${image ~/.config/conky/hdd.png -p 15,170 -s 16x16} ${offset 30}${color1}${fs_used /} / ${fs_size /}\
+${offset 40}${image ~/.config/conky/ram.png -p 150,170 -s 16x16} $mem / $memmax\
+${offset 30}${image ~/.config/conky/cpu.png -p 300,170 -s 16x16} ${offset 9}${cpu cpu0}%
+#+END_SRC
+#+BEGIN_SRC conf :tangle ~/dotfiles/conky/.config/conky/conky2.conkyrc
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 1
+total_run_times 0
+
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_colour 000000
+own_window_argb_visual yes
+own_window_argb_value 0
+
+double_buffer yes
+minimum_size 260 20
+maximum_width 500
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+alignment bottom_right
+gap_x 10
+gap_y 0
+
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+use_spacer yes
+
+# default_color 504f5d
+# color1 504f5d
+# color2 504f5d
+
+default_color ffffff
+color1 ffffff
+color2 ffffff
+
+color3 
+color4
+color5
+
+minimum_size 260 100
+TEXT
+
+${font}${font Distortion Dos Digital:pixelsize=12}\
+“You know you're in love when you can't fall asleep${font}
+${font}${font Distortion Dos Digital:pixelsize=12}\
+because reality is finally better than your dreams.”\
+${font}
+${font}${font Distortion Dos Digital:bold:pixelsize=12}\
+― Dr. Seuss\
+${font}
+#+END_SRC
+

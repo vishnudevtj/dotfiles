@@ -7,6 +7,8 @@
         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
 
+;; Symbolic link to Git-controlled source file
+(setq vc-follow-symlinks t)
 ;; (unless (package-installed-p 'use-package)
 ;; (package-refresh-contents)
 
@@ -39,7 +41,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-present exwm ox-twbs yasnippet-snippets org org-plus-contrib doom try org-beautify-theme nasm-mode x86-lookup rainbow-mode web-mode elpy pyvenv company-jedi dired-subtree dired-quick-sort dired+ evil-collection evil-goggles evil-nerd-commenter evil-surround evil-matchit fzf persistent-scratch mingus golden-ratio prodigy docker shell-switcher markdown-mode pandoc-mode ox-pandoc magit boxquote dumb-jump wgrep-ag ag wgrep image+ elfeed-org ob-async which-key use-package spaceline smex read-aloud pdf-tools ox-gfm org-download org-bullets multi-term key-chord imenu-anywhere hydra htmlize flyspell-correct-ivy flycheck flx-ido expand-region evil-mc elfeed-goodies doom-themes counsel-projectile company-quickhelp color-theme all-the-icons-ivy aggressive-indent ace-window ace-link))))
+    (doom-modeline org-present exwm ox-twbs yasnippet-snippets org org-plus-contrib doom try org-beautify-theme nasm-mode x86-lookup rainbow-mode web-mode elpy pyvenv company-jedi dired-subtree dired-quick-sort dired+ evil-collection evil-goggles evil-nerd-commenter evil-surround evil-matchit fzf persistent-scratch mingus golden-ratio prodigy docker shell-switcher markdown-mode pandoc-mode ox-pandoc magit boxquote dumb-jump wgrep-ag ag wgrep image+ elfeed-org ob-async which-key use-package spaceline smex read-aloud pdf-tools ox-gfm org-download org-bullets multi-term key-chord imenu-anywhere hydra htmlize flyspell-correct-ivy flycheck flx-ido expand-region evil-mc elfeed-goodies doom-themes counsel-projectile company-quickhelp color-theme all-the-icons-ivy aggressive-indent ace-window ace-link))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

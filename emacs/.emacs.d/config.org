@@ -1,6 +1,8 @@
 * Some Basic Setting
 ** Setting
 #+BEGIN_SRC emacs-lisp
+
+(add-to-list 'default-frame-alist '(font . "Source Code Pro"))
 (set-default-font "Source Code Pro")
 ;; sets the default user's information properly.
 (setq user-full-name    "Vishnu Dev TJ"
@@ -62,7 +64,7 @@
 (global-prettify-symbols-mode +1)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
-(add-to-list 'load-path "~/Dropbox/OrgFiles/Emacs/lisp")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (set-face-attribute 'comint-highlight-prompt nil
                     :inherit nil)
@@ -75,6 +77,15 @@
 
 ;;Hide the mouse while typing: 
 (setq make-pointer-invisible t)
+
+;; Visual line mode is set globally 
+(setq global-visual-line-mode t)
+
+;; No more tabs
+(setq-default indent-tabs-mode nil)
+
+;; Symbolic link to Git-controlled source file
+(setq vc-follow-symlinks t)
 #+END_SRC
 ** History
 Maintain a history of past actions and a reasonable number of lists.
@@ -116,26 +127,36 @@ Maintain a history of past actions and a reasonable number of lists.
 ** Space line
 [[https://github.com/TheBB/spaceline][spaceline]] a modeline theme from spacemacs
 #+BEGIN_SRC emacs-lisp
-  (use-package spaceline :ensure t
-    :config
-    (use-package spaceline-config
-      :config
-      (spaceline-toggle-minor-modes-off)
-      (spaceline-toggle-buffer-encoding-off)
-      (spaceline-toggle-buffer-encoding-abbrev-off)
-      (setq powerline-default-separator 'rounded)
-      (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-      (spaceline-define-segment line-column
-        "The current line and column numbers."
-        "l:%l c:%2c")
-      (spaceline-define-segment time
-        "The current time."
-        (format-time-string "%H:%M"))
-      (spaceline-define-segment date
-        "The current date."
-        (format-time-string "%h %d"))
-      (spaceline-toggle-time-on)
-      (spaceline-emacs-theme 'date 'time)))
+;; (use-package spaceline :ensure t
+;;   :config
+;;   (use-package spaceline-config
+;;     :config
+;;     (spaceline-toggle-minor-modes-off)
+;;     (spaceline-toggle-buffer-encoding-off)
+;;     (spaceline-toggle-buffer-encoding-abbrev-off)
+;;     (setq powerline-default-separator 'rounded)
+;;     (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+;;     (spaceline-define-segment line-column
+;;       "The current line and column numbers."
+;;       "l:%l c:%2c")
+;;     (spaceline-define-segment time
+;;       "The current time."
+;;       (format-time-string "%H:%M"))
+;;     (spaceline-define-segment date
+;;       "The current date."
+;;       (format-time-string "%h %d"))
+;;     (spaceline-toggle-time-on)
+;;     (spaceline-emacs-theme 'date 'time)))
+#+END_SRC
+** Doom mode line
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-init)
+  :config
+  (setq doom-modeline-height '20)
+  )
 #+END_SRC
 ** Ace windows for easy window switching
 #+BEGIN_SRC emacs-lisp
@@ -159,6 +180,20 @@ Maintain a history of past actions and a reasonable number of lists.
     )
 
 #+END_SRC
+** Deamon
+#+BEGIN_SRC emacs-lisp
+    (if (daemonp)
+        (add-hook 'after-make-frame-functions
+                  (lambda (frame)
+                    (with-selected-frame frame
+                      (set-terminal-parameter nil 'background-mode 'dark)
+                      (set-frame-parameter nil 'background-mode 'dark)
+                      (load-theme 'doom-vibrant t)
+                      (set-default-font "Source Code Pro")
+                      )))
+      (load-theme 'doom-vibrant t))
+#+END_SRC
+
 * Org Mode
 ** Setting 
 #+BEGIN_SRC emacs-lisp
@@ -281,7 +316,6 @@ Asyncronous execution of org code block
        ))
 #+END_SRC
 
-
 ** Refile
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '(("~/Dropbox/OrgFiles/gtd/gtd.org" :maxlevel . 3)
@@ -296,7 +330,7 @@ Asyncronous execution of org code block
 (use-package org
 :config
 (org-babel-do-load-languages 'org-babel-load-languages
-'((sh         . t)
+'((shell         . t)
  (emacs-lisp . t)
  (perl       . t)
 (python     . t)
@@ -341,11 +375,11 @@ Hydra is a package for GNU Emacs that can be used to tie related commands into a
         [_c_]onfig [_n_]ote  [_g_]td [_j_]ournal [_f_]eed  [_d_]otfile   [_b_]i0s   d[_o_]c
         -------------------------------------------------------------------------------------                           
         "
-    ("c" (find-file "~/Dropbox/OrgFiles/Emacs/config.org") )
+    ("c" (find-file "~/.emacs.d/config.org") )
     ("f" (find-file "~/Dropbox/OrgFiles/Emacs/elfeed.org") )
     ("g" (find-file "~/Dropbox/OrgFiles/gtd/gtd.org") )
     ("n" (find-file "~/Dropbox/OrgFiles/note.org") )
-    ("d" (find-file "~/Dropbox/OrgFiles/dotfile.org") )
+    ("d" (find-file "~/dotfiles/dotfile.org") )
     ("o" (find-file "~/Dropbox/Documents/Documents/doc.org.gpg") )
     ("j" (find-file "~/Dropbox/OrgFiles/journal.org.gpg"))
     ("b" (find-file "~/Dropbox/bi0s/bi0s.org")))
@@ -474,15 +508,18 @@ Hydra is a package for GNU Emacs that can be used to tie related commands into a
 #+END_SRC
 ** Projectile
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
+(use-package projectile
+  :ensure t
+  :config
+  (use-package counsel-projectile
     :ensure t
     :config
-    (use-package counsel-projectile
-      :ensure t
-      )
-    (projectile-mode)
+    (counsel-projectile-mode)
     )
+  (projectile-mode)
+  )
 #+END_SRC
+
 ** Avy
 [[https://github.com/abo-abo/avy][avy]]i is a GNU Emacs package for jumping to visible text using a char-based decision tree.
 See also ace-jump-mode and vim-easymotion - avy uses the same idea.
@@ -728,12 +765,15 @@ It extends the standard Emacs completion interface and provides an environment t
 [[https://github.com/joaotavora/yasnippet][YASnippet]] is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates.
 #+BEGIN_SRC emacs-lisp
 
-  (use-package yasnippet
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :init
+  (yas-global-mode 1)
+  (use-package yasnippet-snippets
     :ensure t
-    :diminish yas-minor-mode
-    :init
-    (yas-global-mode 1)
     )
+  )
 #+END_SRC
 
 ** Company
@@ -741,7 +781,7 @@ It extends the standard Emacs completion interface and provides an environment t
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
-  :config 
+  :config
   (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'prog-mode-hook 'company-mode))
 (use-package company-quickhelp
@@ -1123,6 +1163,16 @@ Manage external services from within Emacs
   :stop-signal 'sigint
   :kill-process-buffer-on-stop t
             )
+(prodigy-define-service
+  :name "Jekyll"
+  :command "docker"
+  :args '("run" "--rm" "--volume=/home/nemesis/Git/GitLabs/inctf:/srv/jekyll" "-p" "4000:4000" "-it" "jekyll/jekyll" "jekyll" "serve" "--watch")
+  :cwd "/home/nemesis/Git/GitLabs/inctf"
+  :tags '(blog jekyll)
+  :stop-signal 'sigint
+  :kill-process-buffer-on-stop t
+            )
+
   )
 #+END_SRC
 
@@ -1197,6 +1247,14 @@ fzf is a general-purpose command-line fuzzy finder.
 		(org-present-read-write)))))
 #+END_SRC
 
+** Org reveal
+#+BEGIN_SRC emacs-lisp
+(use-package ox-reveal
+  :ensure t
+  :config
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.6.0/")
+  )
+#+END_SRC
 * Evil Mode
 Evil is an extensible vi layer for Emacs. It emulates the main features of Vim, and provides facilities for writing custom extensions.
 Also see our page on EmacsWiki.
@@ -1574,7 +1632,7 @@ buffer is not visiting a file."
   (face-remap-add-relative 'org-level-1 :foregound "#000000" )
   (face-remap-add-relative 'org-level-2 :foregound "#000000" :slant 'italic)
   (face-remap-add-relative 'org-level-3 :foregound "#000000")
-  (setq org-bullets-bullet-list '(" " " " " " " " " " " " " " " " " " " " " "))
+  ;; (setq org-bullets-bullet-list '(" " " " " " " " " " " " " " " " " " " " " "))
   (org-mode)
   (hidden-mode-line-mode)
   (relative-line-numbers--off)
@@ -1583,7 +1641,6 @@ buffer is not visiting a file."
 )
 
 #+END_SRC
-
 
 ** Leet
 #+BEGIN_SRC emacs-lisp
@@ -1738,32 +1795,32 @@ this can be solved by
 ** Banner 
 #+BEGIN_SRC emacs-lisp
 
-(defun insert-ascii-banner-centered (file)
-  "Insert banner from FILE."
-  (insert
-   (with-temp-buffer
-     (insert-file-contents file)
-     (let ((banner-width 0))
-       (while (not (eobp))
-         (let ((line-length (- (line-end-position) (line-beginning-position))))
-           (if (< banner-width line-length)
-               (setq banner-width line-length)))
-         (forward-line 1))
-       (goto-char 0)
-       (let ((margin (max 0 (floor (/ (- 150 banner-width) 2)))))
-         (while (not (eobp))
-	   (insert (make-string margin ?\ ))
-           (forward-line 1))))
-     (buffer-string))))
-(progn
-  (switch-to-buffer-other-window "banner")
-  (org-mode)
-  (delete-other-windows)
-  (erase-buffer)
-  (insert-ascii-banner-centered  "~/.emacs.d/banner")
-  (put-text-property (point-min) (point-max) 'font-lock-face '(:foreground "#51afef"))
-  (read-only-mode)
-  )
+;; (defun insert-ascii-banner-centered (file)
+;;   "Insert banner from FILE."
+;;   (insert
+;;    (with-temp-buffer
+;;      (insert-file-contents file)
+;;      (let ((banner-width 0))
+;;        (while (not (eobp))
+;;          (let ((line-length (- (line-end-position) (line-beginning-position))))
+;;            (if (< banner-width line-length)
+;;                (setq banner-width line-length)))
+;;          (forward-line 1))
+;;        (goto-char 0)
+;;        (let ((margin (max 0 (floor (/ (- 150 banner-width) 2)))))
+;;          (while (not (eobp))
+;; 	   (insert (make-string margin ?\ ))
+;;            (forward-line 1))))
+;;      (buffer-string))))
+;; (progn
+;;   (switch-to-buffer-other-window "banner")
+;;   (org-mode)
+;;   (delete-other-windows)
+;;   (erase-buffer)
+;;   (insert-ascii-banner-centered  "~/.emacs.d/banner")
+;;   (put-text-property (point-min) (point-max) 'font-lock-face '(:foreground "#51afef"))
+;;   (read-only-mode)
+;;   )
 
 #+END_SRC
 * CTF
@@ -1772,17 +1829,20 @@ this can be solved by
 (defun ctf-init (name)
 "Initialize  files and folder for ctf "
 (interactive"MEnter name : ")
-(make-directory (concat ctf-base-directory name))
+(setq  name (replace-regexp-in-string " " "" (capitalize name )))
+(if (file-exists-p (concat ctf-base-directory name)) (message "File Exist")
+  (make-directory (concat ctf-base-directory name)))
+(setq name (concat name "/" (format-time-string "%Y")))
+(if (file-exists-p  (concat ctf-base-directory name)) (message "File Exist")
+  (make-directory (concat ctf-base-directory name)))
 (write-region "" "" (concat  ctf-base-directory name "/note.org"))
 (write-region "" "" (concat  ctf-base-directory name "/writeup.org"))
 (make-directory (concat  ctf-base-directory name "/files"))
 (find-file (concat ctf-base-directory name "/note.org"))
 (insert "ctf")
 (yas-expand)
-(insert (capitalize (replace-regexp-in-string "\\\\." " " name)))
-;; (shell-command (concat ctf-base-directory "init.sh " name))
+(insert (capitalize  name))
 )
-
 
 (defun list-org-file-link ( name )
   "returns the list of files link in a org "

@@ -30,9 +30,14 @@ net_avg_samples 1
 override_utf8_locale yes
 use_spacer yes
 
-default_color 504f5d
-color1 504f5d
-color2 504f5d
+# default_color 504f5d
+# color1 504f5d
+# color2 504f5d
+
+default_color ffffff
+color1 ffffff
+color2 ffffff
+
 color3 
 color4
 color5
@@ -44,6 +49,6 @@ ${voffset 60}${color1}${font Helvetica Neue:pixelsize=90}${time %I:%M}${font}
 ${voffset -60}${offset 260}${color2}${font Lato:thin:pixelsize=22}${time %d} ${time  %B} ${time %Y}
 ${font}${voffset -5}${offset 260}${font Distortion Dos Digital:pixelsize=28}${time %A}${font}
 
-${image ~/.syclo-conky/blue/hdd.png -p 15,170 -s 16x16} ${offset 30}${color1}${fs_used /} / ${fs_size /}\
-${offset 40}${image ~/.syclo-conky/blue/ram.png -p 150,170 -s 16x16} $mem / $memmax\
-${offset 30}${image ~/.syclo-conky/blue/cpu.png -p 300,170 -s 16x16} ${offset 9}${cpu cpu0}%
+${image ~/.config/conky/hdd.png -p 15,170 -s 16x16} ${offset 30}${color1}${fs_used /} / ${fs_size /}\
+${offset 40}${image ~/.config/conky/ram.png -p 150,170 -s 16x16} $mem / $memmax\
+${offset 30}${image ~/.config/conky/cpu.png -p 300,170 -s 16x16} ${offset 9}${cpu cpu0}%

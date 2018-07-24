@@ -31,9 +31,14 @@ net_avg_samples 1
 override_utf8_locale yes
 use_spacer yes
 
-default_color 504f5d
-color1 504f5d
-color2 504f5d
+# default_color 504f5d
+# color1 504f5d
+# color2 504f5d
+
+default_color ffffff
+color1 ffffff
+color2 ffffff
+
 color3 
 color4
 color5
