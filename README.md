@@ -22,4 +22,4 @@ cd dotfiles
 stow emacs
 ```
 
-This installs all the confing files required by emacs.
+This installs all the confing files required by [emacs](https://www.gnu.org/software/emacs/).
