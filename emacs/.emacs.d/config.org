@@ -219,26 +219,15 @@ Maintain a history of past actions and a reasonable number of lists.
 (global-set-key (kbd "C-c g") 'org-agenda)
 
 ;;Expantions
+(require 'org-tempo)
 ;; add <el for emacs-lisp expansion
-(add-to-list 'org-structure-template-alist
-	     '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"
-	       "<src lang=\"emacs-lisp\">\n?\n</src>"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 ;; add <p for python expansion
-(add-to-list 'org-structure-template-alist
-	     '("p" "#+BEGIN_SRC python :results output org drawer\n?\n#+END_SRC"
-	       "<src lang=\"python\">\n?\n</src>"))
+(add-to-list 'org-structure-template-alist '("py" . "src python :results output org drawer"))
 ;; add <sh for shell
-(add-to-list 'org-structure-template-alist
-	     '("sh" "#+BEGIN_SRC sh\n?\n#+END_SRC"
-	       "<src lang=\"shell\">\n?\n</src>"))
-;; add <ip for shell
-(add-to-list 'org-structure-template-alist
-	     '("ip" "#+BEGIN_SRC ipython  :session \n?\n#+END_SRC"
-	       "<src lang=\"python\">\n?\n</src>"))
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
 ;; add <n for emacs-lisp expansion
-(add-to-list 'org-structure-template-alist
-	     '("n" "#+BEGIN_SRC nasm \n?\n#+END_SRC"
-	       "<src lang=\"nasm\">\n?\n</src>"))
+(add-to-list 'org-structure-template-alist '("n" . "src nasm"))
 
 ;; no extra indentation in the source blocks
 (setq org-src-preserve-indentation t)
