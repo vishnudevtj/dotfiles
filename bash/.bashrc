@@ -111,3 +111,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+function download_package () {
+    apt install -y $1 --print-uris | grep "http://" | cut -d"'" -f 2 | sudo  wget -P /var/cache/apt/archives/ -c -i - && sudo apt install $1
+}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

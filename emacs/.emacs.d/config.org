@@ -1727,16 +1727,16 @@ this can be solved by
 #+END_SRC
 *** pep8
 #+BEGIN_SRC emacs-lisp
-;; (use-package py-autopep8
-;;   :ensure t
-;;   :config
-;;  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-;;  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-;;   )
+(use-package py-autopep8
+  :ensure t
+  :config
+ (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+ (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  )
 #+END_SRC
 - dependencies
     #+BEGIN_SRC sh
-    sudo pip insyall autopep8
+    sudo pip install autopep8
     #+END_SRC
 ** HTML
 *** Web Mode
@@ -1773,6 +1773,39 @@ this can be solved by
   (add-hook 'asm-mode-hook 'nasm-mode)
   )
 #+END_SRC
+** C
+
+#+begin_src emacs-lisp
+;; https://github.com/dkogan/xcscope.el
+;; Dependencies cscope
+(use-package xcscope
+  :ensure t
+  :config
+  (cscope-setup)
+  )
+;; https://github.com/leoliu/ggtags
+;; Dependencies global
+(use-package ggtags
+  :ensure t
+  :config
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                (ggtags-mode 1))))
+  (define-key ggtags-mode-map (kbd "C-c g g") 'ggtags-find-tag-dwim)
+  (define-key ggtags-mode-map (kbd "C-c g d") 'ggtags-find-definition)
+  (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-tag-regexp)
+  (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+  (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+  (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+  (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+
+  (define-key evil-normal-state-map (kbd "M-.") 'ggtags-find-tag-dwim)
+
+  (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+  )
+#+end_src
+
 * Custom Faces
 ** Org
 #+BEGIN_SRC emacs-lisp

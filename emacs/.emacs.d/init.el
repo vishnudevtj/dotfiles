@@ -23,6 +23,7 @@
 
 
 
+(add-to-list 'load-path "~/.emacs.d/elpa/org-bullets")
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
