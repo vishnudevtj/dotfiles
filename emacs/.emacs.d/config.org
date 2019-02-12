@@ -506,6 +506,7 @@ Hydra is a package for GNU Emacs that can be used to tie related commands into a
     (counsel-projectile-mode)
     )
   (projectile-mode)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   )
 #+END_SRC
 
@@ -1146,22 +1147,12 @@ Manage external services from within Emacs
 (prodigy-define-service
   :name "Jekyll"
   :command "docker"
-  :args '("run" "--rm" "--volume=/home/nemesis/Git/GitHub/vishnudevtj.github.io:/srv/jekyll" "-p" "4000:4000" "-it" "jekyll/jekyll" "jekyll" "serve" "--watch")
-  :cwd "/home/nemesis/Git/GitHub/vishnudevtj.github.io"
+  :args '("run" "--rm" "--volume=/home/nemesis/Projects/vishnudevtj.github.io:/srv/jekyll" "-p" "4000:4000" "-it" "jekyll/jekyll:3.8" "jekyll" "serve" "--watch")
+  :cwd "/home/nemesis/Projects/vishnudevtj.github.io"
   :tags '(blog jekyll)
   :stop-signal 'sigint
   :kill-process-buffer-on-stop t
             )
-(prodigy-define-service
-  :name "Jekyll"
-  :command "docker"
-  :args '("run" "--rm" "--volume=/home/nemesis/Git/GitLabs/inctf:/srv/jekyll" "-p" "4000:4000" "-it" "jekyll/jekyll" "jekyll" "serve" "--watch")
-  :cwd "/home/nemesis/Git/GitLabs/inctf"
-  :tags '(blog jekyll)
-  :stop-signal 'sigint
-  :kill-process-buffer-on-stop t
-            )
-
   )
 #+END_SRC
 

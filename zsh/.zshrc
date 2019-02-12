@@ -99,6 +99,10 @@ source $ZSH/oh-my-zsh.sh
 
  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+ # Autojump
+ [[ -s /home/nemesis/.autojump/etc/profile.d/autojump.sh ]] && source /home/nemesis/.autojump/etc/profile.d/autojump.sh
+ autoload -U compinit && compinit -u
+
  export EDITOR='vim'
  export SHELL='/bin/zsh'
  export PATH=$PATH:"$HOME/.local/bin":

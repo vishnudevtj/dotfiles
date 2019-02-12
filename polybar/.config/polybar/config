@@ -1,11 +1,14 @@
 [colors]
-background = #222
+background = #1f1f1f
 background-alt = #444
-foreground = #dfdfdf
+foreground = #eee
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+
+;background = #222
+
 
 [bar/example]
 monitor = ${env:MONITOR}
@@ -26,13 +29,13 @@ border-size = 1
 border-color = #000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 1
 
 
-module-margin-left = 3
-module-margin-right = 2
+module-margin-left = 1
+module-margin-right = 1
 
-font-0 = "Source Code Pro:black:size=8";0
+font-0 = Source Code Pro:black:size=8;0
 font-1 = unifont:size=6:heavy:fontformat=truetype;0
 font-2 = FontAwesome:size=8;0
 
@@ -58,9 +61,6 @@ index-sort = true
 enable-click = true
 fuzzy-match = true
 
-Additional formatting
-ws-icon-0 = "1;"
-
 format = <label-state> <label-mode>
 
 ; Available tokens:
@@ -80,7 +80,7 @@ label-focused = %index%
 label-focused-foreground = #ffffff
 label-focused-background = #3f3f3f
 ; label-focused-underline = #00FFFF
-label-focused-padding = 4
+label-focused-padding = 2
 
 ; Available tokens:
 ;   %name%
@@ -88,7 +88,7 @@ label-focused-padding = 4
 ;   %index%
 ; Default: %icon%  %name%
 label-unfocused = %index%
-label-unfocused-padding = 4
+label-unfocused-padding = 2
 
 ; Available tokens:
 ;   %name%
@@ -122,7 +122,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = ::
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #ea4335
 label = %percentage_used%%
@@ -165,6 +165,7 @@ label-connected = %downspeed:5% : %upspeed:5%
 [module/speed_lan]
 
 type = internal/network
+interface = enp7s0
 interval = 3.0
 
 accumulate-stats = true
@@ -174,6 +175,7 @@ label-connected = %downspeed:5% : %upspeed:5%
 
 [module/eth]
 type = internal/network
+interface = enp7s0
 interval = 3.0
 
 format-connected-underline = #55aa55
@@ -192,7 +194,7 @@ date-alt = " %Y-%m-%d"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
+format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
