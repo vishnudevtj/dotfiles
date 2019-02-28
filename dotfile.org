@@ -14,7 +14,7 @@ font pango:Noto Sans 10.5
 floating_modifier $mod
 floating_maximum_size 1300 x 700
 # start a terminal
-bindsym $mod+Return  [class="Termite"] border pixel 15 , exec termite 
+bindsym $mod+Return  [class="Termite"] border pixel 15 , exec gnome-terminal --hide-menubar
 #bindsym $mod+Return exec tilda
 
 assign [class="Emacs"] $workspace1
@@ -119,7 +119,7 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 
 exec --no-startup-id i3-msg 'workspace$workspace4; exec mpd  ;exec termite -e  'ncmpcpp';exec termite  -e 'cava''
 exec --no-startup-id i3-msg 'workspace $workspace2; exec firefox'
-exec --no-startup-id i3-msg 'exec emacs'
+exec --no-startup-id i3-msg 'exec emacsclient-one-frame'
 exec --no-startup-id i3-msg 'workspace $workspace10'
 
 # exec --no-startup-id i3-msg 'workspace $workspace10;exec sleep 10s; exec termite -e 'glances' ; workspace $workspace1'
