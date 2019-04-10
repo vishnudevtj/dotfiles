@@ -1890,10 +1890,11 @@ Rop Gadget search
   "ROP gadget Search for a bianry"
   (interactive "fFile name : ")
   (progn
+    (setq rop-gadget-path (expand-file-name "~/.local/bin/ROPgadget"))
     (setq buffer-name (concat (file-name-base arg ) "_gadgets"))
     (if (get-buffer buffer-name) ()
       (progn
-	(shell-command (concat "ROPgadget " " --binary " arg) buffer-name)
+	(shell-command (concat rop-gadget-path " " " --binary " arg) buffer-name)
 	(with-current-buffer buffer-name 
 	  (bury-buffer))))
     (with-current-buffer buffer-name
