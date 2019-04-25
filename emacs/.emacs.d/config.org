@@ -852,17 +852,6 @@ This lets you use C-x u (undo-tree-visualize) to visually walk through the chang
     )
 
 #+END_SRC
-** Agressive intentation
-
-[[https://github.com/Malabarba/aggressive-indent-mode][aggresive intentation]] is enough to keep your code nicely aligned when all you do is type.
-#+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent
-  :ensure t
-  :config
-  (global-aggressive-indent-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'python-mode 'assembler-mode)
-  )
-#+END_SRC
 ** Elfeed
 
 Elfeed is a RSS ,Atom reader for emacs
@@ -1648,8 +1637,12 @@ buffer is not visiting a file."
 ** Python
 *** Setting
 #+BEGIN_SRC emacs-lisp
-(setq python-shell-interpreter "ipython3"
-      python-shell-interpreter-args " -i")
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args " -i")
+
+;; Normal python shell
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "")
 
 (setenv "PYTHONPATH" "/home/nemesis/bi0s/library/python")
 
