@@ -1907,7 +1907,11 @@ Rop Gadget search
 
 (defun counsel-rop (arg)
   "ROP gadget Search for a bianry"
-  (interactive "fFile name : ")
+  (interactive (list
+                (ivy-read "Find File :"
+                          (split-string
+                           (shell-command-to-string
+                            (concat "find " default-directory  " -type f -executable ! -size 0")) "\n" t))))
   (progn
     (setq rop-gadget-path (expand-file-name "~/.local/bin/ROPgadget"))
     (setq buffer-name (concat (file-name-base arg ) "_gadgets"))
@@ -1921,10 +1925,26 @@ Rop Gadget search
       ))
   (ivy-read " Gadget : " cantidates
 	    :re-builder #'ivy--regex-fuzzy
-	    :action #'insert
+	    :action #'(lambda (x)
+                        (let* ((address (car (split-string x "\:")))
+                               (gadget  (car (cdr (split-string x "\:"))))
+                               (i "")
+                               (str ""))
+                          (setq gadget (replace-regexp-in-string "\\(.;.ret\\)\\|^ " "" gadget))
+                          (if (string-match-p "pop" gadget)
+                              (progn
+                                (setq i (split-string gadget "pop"))
+                                    (while i
+                                        (setq str (concat str (car i)))
+                                        (setq i (cdr i)))
+                                (setq gadget (concat "pop" str))))
+                          (setq gadget (replace-regexp-in-string ".;" "" gadget))
+                          (setq gadget (replace-regexp-in-string "," " " gadget))
+                          (setq gadget (replace-regexp-in-string " +" "_" gadget))
+                          (setq address (replace-regexp-in-string "0x0*" "0x00" address))
+                          (insert (concat gadget " = " address "\t# " x "\n"))))
 	    :caller 'counsel-rop
 	    ))
-
 (ivy-set-actions
  'counsel-rop
  '(("a" (lambda (x) (insert (car (split-string x "\:")))) "Insert Address")
