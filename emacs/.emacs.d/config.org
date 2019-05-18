@@ -167,19 +167,6 @@ Maintain a history of past actions and a reasonable number of lists.
     :bind (("C-x o" . ace-window))
     )
 #+END_SRC
-** Icon
-#+BEGIN_SRC emacs-lisp
-  (use-package all-the-icons
-    :ensure t
-    :config
-    (use-package all-the-icons-ivy
-      :ensure t
-      :config 
-      (all-the-icons-ivy-setup)
-      )
-    )
-
-#+END_SRC
 ** Deamon
 #+BEGIN_SRC emacs-lisp
     (if (daemonp)
@@ -194,6 +181,19 @@ Maintain a history of past actions and a reasonable number of lists.
       (load-theme 'doom-vibrant t))
 #+END_SRC
 
+** Icon
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons
+    :ensure t
+    :config
+    (use-package all-the-icons-ivy
+      :ensure t
+      :config 
+      (all-the-icons-ivy-setup)
+      )
+    )
+
+#+END_SRC
 * Org Mode
 ** Setting 
 #+BEGIN_SRC emacs-lisp
@@ -219,7 +219,7 @@ Maintain a history of past actions and a reasonable number of lists.
 (global-set-key (kbd "C-c g") 'org-agenda)
 
 ;;Expantions
-(require 'org-tempo)
+;; (require 'org-tempo)
 ;; add <el for emacs-lisp expansion
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 ;; add <p for python expansion
@@ -242,7 +242,6 @@ Maintain a history of past actions and a reasonable number of lists.
 
 ** Packages
 *** Org Bullet 
-
 #+BEGIN_SRC emacs-lisp
   ;; (use-package org-bullets
   ;;   :ensure t
@@ -250,45 +249,11 @@ Maintain a history of past actions and a reasonable number of lists.
   ;;   (add-hook 'org-mode-hook 'org-bullet-mode)
   ;;   )
 #+END_SRC
-
-*** Htmlizer
-#+BEGIN_SRC emacs-lisp
-  (use-package htmlize
-    :ensure t
-    )
-#+END_SRC
-*** Async
-
-Asyncronous execution of org code block
-#+BEGIN_SRC emacs-lisp
-  ;;(use-package ob-async
-  ;;  :ensure t
-  ;;  )
-
-#+END_SRC
-
-*** Exporter
-#+BEGIN_SRC emacs-lisp
-  (use-package ox-gfm
-    :ensure t
-    )
-#+END_SRC
-*** Org Download
-#+BEGIN_SRC emacs-lisp
-(use-package org-download
-  :ensure t
-  :config
-  (org-download-enable)
-  ;;Require Gnome Screenshot
-  (setq org-download-screenshot-method " sleep 5s && gnome-screenshot -a -f %s")
-  )
-#+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates '
       (
-
        ("j" "Journal Entry"
 	entry (file+datetree "~/Dropbox/OrgFiles/journal.org.gpg")
 	"* Event: %?\n\n  %i\n\n "A :prepend t 
@@ -313,17 +278,14 @@ Asyncronous execution of org code block
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
-;; (use-package ob-ipython
-;;   :ensure t
-;;   )
 (use-package org
-:config
-(org-babel-do-load-languages 'org-babel-load-languages
-'((shell         . t)
- (emacs-lisp . t)
- (perl       . t)
-(python     . t)
-)))
+  :config
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((shell         . t)
+                                 (emacs-lisp . t)
+                                 (perl       . t)
+                                 (python     . t)
+                                 )))
 #+END_SRC
 
 ** Org Crypt
@@ -365,7 +327,6 @@ Hydra is a package for GNU Emacs that can be used to tie related commands into a
         -------------------------------------------------------------------------------------                           
         "
     ("c" (find-file "~/.emacs.d/config.org") )
-    ("f" (find-file "~/Dropbox/OrgFiles/Emacs/elfeed.org") )
     ("g" (find-file "~/Dropbox/OrgFiles/gtd/gtd.org") )
     ("n" (find-file "~/Dropbox/OrgFiles/note.org") )
     ("d" (find-file "~/dotfiles/dotfile.org") )
@@ -390,21 +351,6 @@ Hydra is a package for GNU Emacs that can be used to tie related commands into a
     ("b" helm-buffers-list)
     ("t" eshelli "shell")
     ("q" nil))
-  ;;Dired Hydra
-  ;; (bind-keys :map elfeed-search-mode-map
-  ;; 	     ("\\"   . my/hydra-elfeed/body))
-
-  (defhydra my/hydra-elfeed ()
-    "filter"
-    ("e" (elfeed-search-set-filter "@6-months-ago +emacs") "emacs")
-    ("s" (elfeed-search-set-filter "@6-months-ago +security") "security")
-    ("c" (elfeed-search-set-filter "@6-months-ago +comic") "comic")
-    ("M" elfeed-toggle-star "Mark")
-    ("A" (elfeed-search-set-filter "@6-months-ago") "All")
-    ("T" (elfeed-search-set-filter "@1-day-ago") "Today")
-    ("Q" bjm/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
-    ("q" nil "quit" :color blue)
-    )
 
   ;;Dired Hydra
   ;; (bind-keys :map dired-mode-map
@@ -490,7 +436,6 @@ Hydra is a package for GNU Emacs that can be used to tie related commands into a
     (key-chord-define-global "jw"     'my/window-movement/body)
     (key-chord-define-global "jf"     'my/hydra-file/body)
     (key-chord-define-global "jd"     'my/hydra-dired/body)
-    (key-chord-define-global "je"     'my/hydra-elfeed/body)
     (key-chord-define-global "ji"     'my/hydra-image/body)
     (key-chord-define-global "ja"     'my/hydra-applications/body)
     )
@@ -833,8 +778,17 @@ This lets you use C-x u (undo-tree-visualize) to visually walk through the chang
 	 ("C-c s" . multi-term))
   )
 #+END_SRC
+Multiple Eshell 
+#+BEGIN_SRC emacs-lisp
+  (use-package shell-switcher
+    :ensure t
+    :config
+    (setq shell-switcher-mode t)
+    :bind (("C-;" . shell-switcher-switch-buffer)
+           ("C-x 4 '" . shell-switcher-switch-buffer-other-window)
+           ("C-M-;" . shell-switcher-new-shell)))
+#+END_SRC
 ** Flycheck
-
 [[http://www.flycheck.org/en/latest/][flycheck]] Flycheck is a modern on-the-fly syntax checking extension for GNU Emacs
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -842,48 +796,6 @@ This lets you use C-x u (undo-tree-visualize) to visually walk through the chang
     :init
     (global-flycheck-mode t)
     )
-#+END_SRC
-** Read aloud
-
-[[https://github.com/gromnitsky/read-aloud.el][read aloud]] is a simple TTS engine
-#+BEGIN_SRC emacs-lisp
-  (use-package read-aloud
-    :ensure t
-    )
-
-#+END_SRC
-** Elfeed
-
-Elfeed is a RSS ,Atom reader for emacs
-#+BEGIN_SRC emacs-lisp
-  (use-package elfeed
-    :ensure t
-    :config
-    (defun bjm/elfeed-save-db-and-bury ()
-      "Wrapper to save the elfeed db to disk before burying buffer"
-      (interactive)
-      (elfeed-db-save)
-      (quit-window))
-    (defun bjm/elfeed-load-db-and-open ()
-      "Wrapper to load the elfeed db from disk before opening"
-      (interactive)
-      (elfeed-db-load)
-      (elfeed)
-      (elfeed-search-update--force))
-    :bind (:map elfeed-search-mode-map
-                ("q" . bjm/elfeed-save-db-and-bury)
-                ))
-  (use-package elfeed-goodies
-    :ensure t
-    :config
-    (elfeed-goodies/setup)
-    )
-
-(use-package elfeed-org
-  :ensure t
-  :config
-  (elfeed-org)
-  (setq rmh-elfeed-org-files (list "~/Dropbox/OrgFiles/Emacs/elfeed.org")))
 #+END_SRC
 ** Multiple Cursor 
 [[https://github.com/gabesoft/evil-mc][Multiple Cursor]] We can do some serious stuffs with this
@@ -1001,75 +913,7 @@ PDF Files inside emacs
       :ensure t)
     )
 #+END_SRC
-** DumpJump
-Dump Jump to defenition package . It uses ag to find the defention .
-#+BEGIN_SRC emacs-lisp
-  (use-package dumb-jump
-    :ensure t
-    :bind (("M-g o" . dumb-jump-go-other-window)
-           ("M-g j" . dumb-jump-go)
-           ("M-g i" . dumb-jump-go-prompt)
-           ("M-g x" . dumb-jump-go-prefer-external)
-           ("M-g z" . dumb-jump-go-prefer-external-other-window))
-    :config (setq dumb-jump-selector 'ivy) 
-    )
-
-
-#+END_SRC
-
-** Boxquote
-[[https://github.com/davep/boxquote.el][boxquote.el]] provides a set of functions for using a text quoting style that partially boxes in the left hand side of an area of text,
-such a marking style might be used to show externally included text or example code.
-#+BEGIN_SRC emacs-lisp
-  (use-package boxquote
-    :ensure t
-    :defer t
-    :config
-    (setq-default  boxquote-bottom-corner "╰"      ; U+2570
-                   boxquote-side          "│ "     ; U+2572 + space
-                   boxquote-top-and-tail  "────"   ; U+2500 (×4)
-                   boxquote-top-corner    "╭")     ; U+256F
-    (when (package-installed-p 'hydra)
-      (eval-and-compile
-        (defhydra hydra-boxquote (:color blue :hint nil)
-          "
-                                                                      ╭──────────┐
-    Text           External           Apropos         Do              │ Boxquote │
-  ╭───────────────────────────────────────────────────────────────────┴──────────╯
-    [_r_] region        [_f_] file      [_K_] describe-key        [_t_] title
-    [_p_] paragraph     [_b_] buffer    [_F_] describe-function   [_u_] unbox
-    [_a_] buffer        [_s_] shell     [_V_] describe-variable   [_w_] fill-paragraph
-    [_e_] text           ^ ^            [_W_] where-is            [_n_] narrow
-    [_d_] defun         [_y_] yank       ^ ^                      [_c_] narrow to content
-    [_q_] boxquote      [_Y_] yanked     ^ ^                      [_x_] kill
-  --------------------------------------------------------------------------------
-         "
-          ("<esc>" nil "quit")
-          ("x" boxquote-kill)
-          ("Y" boxquote-yank)
-          ("e" boxquote-text)
-          ("u" boxquote-unbox)
-          ("d" boxquote-defun)
-          ("t" boxquote-title)
-          ("r" boxquote-region)
-          ("a" boxquote-buffer)
-          ("q" boxquote-boxquote)
-          ("W" boxquote-where-is)
-          ("p" boxquote-paragraph)
-          ("f" boxquote-insert-file)
-          ("K" boxquote-describe-key)
-          ("s" boxquote-shell-command)
-          ("b" boxquote-insert-buffer)
-          ("y" boxquote-kill-ring-save)
-          ("w" boxquote-fill-paragraph)
-          ("F" boxquote-describe-function)
-          ("V" boxquote-describe-variable)
-          ("n" boxquote-narrow-to-boxquote)
-          ("c" boxquote-narrow-to-boxquote-content)))))
-
-#+END_SRC
-** Git
-*** Magit
+** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system Git, implemented as an Emacs package. 
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -1110,23 +954,6 @@ such a marking style might be used to show externally included text or example c
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 #+END_SRC
-** Shell Switcher
-Multiple Eshell 
-#+BEGIN_SRC emacs-lisp
-  (use-package shell-switcher
-    :ensure t
-    :config
-    (setq shell-switcher-mode t)
-    :bind (("C-;" . shell-switcher-switch-buffer)
-           ("C-x 4 '" . shell-switcher-switch-buffer-other-window)
-           ("C-M-;" . shell-switcher-new-shell)))
-#+END_SRC
-** Docker
-#+BEGIN_SRC emacs-lisp
-(use-package docker
-  :ensure t
-  )
-#+END_SRC
 ** Prodigy
 Manage external services from within Emacs 
 #+BEGIN_SRC emacs-lisp
@@ -1145,31 +972,6 @@ Manage external services from within Emacs
   )
 #+END_SRC
 
-** Golden-Ratio
-[[https://github.com/roman/golden-ratio.el][golden ratio]]
-When working with many windows at the same time, each window has a size that is not convenient for editing.
-golden-ratio helps on this issue by resizing automatically the windows you are working on to the size specified in the "Golden Ratio".
-The window that has the main focus will have the perfect size for editing, while the ones that are not being actively edited
-will be re-sized to a smaller size that doesn't get in the way, but at the same time will be readable enough to know it's content.
-#+BEGIN_SRC emacs-lisp
-(use-package golden-ratio
-  :ensure t
-  :config
-  (golden-ratio-mode 1)
-  (setq golden-ratio-adjust-factor .8
-	golden-ratio-wide-adjust-factor .8)
-  )
-#+END_SRC
-** Mingus
-#+BEGIN_SRC emacs-lisp
-(use-package mingus
-  :ensure t
-:config
-(setenv "MPD_HOST" "127.0.0.1")
-(setenv "MPD_PORT" "6601")
-(global-set-key (kbd "C-c m") 'mingus)
-)
-#+END_SRC
 ** Persistant scratch
 [[https://github.com/Fanael/persistent-scratch][persistent-scratch]] is an Emacs package that preserves the state of scratch buffers accross Emacs sessions by saving the state to and 
 restoring it from a file.
@@ -1225,19 +1027,14 @@ Also see our page on EmacsWiki.
   (evil-mode 1)
   (add-to-list 'evil-emacs-state-modes 'mingus-playlist-mode)
   (add-to-list 'evil-emacs-state-modes 'mingus-browse-mode)
-  (add-to-list 'evil-emacs-state-modes 'elfeed-search-mode)
   (add-to-list 'evil-emacs-state-modes 'mingus-browse-mode)
-  (add-to-list 'evil-emacs-state-modes 'elfeed-show-mode)
   (add-to-list 'evil-emacs-state-modes 'special-mode)
   (add-to-list 'evil-emacs-state-modes 'eww-mode)
   (add-to-list 'evil-emacs-state-modes 'notmuch-tree-mode)
   (setq evil-insert-state-cursor  'box)
-  
-
 )
 
 #+END_SRC
-
 ** Evil Packages
 #+BEGIN_SRC emacs-lisp
 (use-package evil-matchit
@@ -1253,24 +1050,17 @@ Also see our page on EmacsWiki.
   :ensure t
   :bind (("M-;" . evilnc-comment-or-uncomment-lines))
   )
-;; evil Python 
+(use-package evil-goggles
+  :ensure t
+  :config
+  (evil-goggles-mode)
+)
 
+;; evil Python 
 (evil-define-key 'visual python-mode-map 
   (kbd "RET") 'python-shell-send-region)
 (evil-define-key 'normal python-mode-map
   "gs" 'python-shell-switch-to-shell)
-(use-package evil-goggles
-  :ensure t
-  :config
-  (evil-goggles-mode))
-
-;; (use-package evil-collection
-;;   :ensure t
-;;   :custom
-;;   (evil-collection-setup-minibuffer t)
-;;   :init
-;;   (evil-collection-init))
-
 #+END_SRC
 * Tweak
 ** Dired
@@ -1285,30 +1075,6 @@ Also see our page on EmacsWiki.
        )
 (setq dired-dwim-target t) ;;If Split Window Copy path is other windows
 (setq find-ls-option (quote ("-print0 | xargs -0 ls -la" . "-dilsb"))) ;making wdired work with find-dired 
-;; (use-package  dired+
-;;   :ensure t
-;;   :config
-;;   (custom-set-faces
-;;    '(diredp-compressed-file-name ((t nil)))
-;;    '(diredp-compressed-file-suffix ((t (:foreground "#7474FFFF7474"))))
-;;    '(diredp-date-time ((t nil)))
-;;    '(diredp-deletion ((t (:foreground "red"))))
-;;    '(diredp-di-heading ((t nil)))
-;;    '(diredp-dir-name ((t (:foreground "DodgerBlue1"))))
-;;    '(diredp-dir-priv ((t nil)))
-;;    '(diredp-exec-priv ((t nil)))
-;;    '(diredp-file-name ((t nil)))
-;;    '(diredp-file-suffix ((t (:foreground "#7474FFFF7474"))))
-;;    '(diredp-flag-mark ((t (:foreground "Blue"))))
-;;    '(diredp-flag-mark-line ((t nil)))
-;;    '(diredp-no-priv ((t nil)))
-;;    '(diredp-number ((t (:foreground "white"))))
-;;    '(diredp-rare-priv ((t (:foreground "Green"))))
-;;    '(diredp-read-priv ((t nil)))
-;;    '(diredp-write-priv ((t nil)))
-;;    )
-;;   )
-
 ;; Hitting S Brings up Dired sort menu
 (use-package dired-quick-sort
   :ensure t
@@ -1424,46 +1190,6 @@ Most of the code copied from [[http://fasciism.com/][fasciism]]
         (find-file (concat "/sudo::" file))
       (mak::tramp-remote-find-file-with-sudo file)))
 
-  (global-set-key (kbd "C-x s") 'my/eshell-fullscreen)
-  (defun my/eshell-fullscreen ()
-    "Bring up a full-screen eshell or restore previous config."
-    (interactive)
-    (if (string= "eshell-mode" major-mode)
-        (jump-to-register :eshell-fullscreen)
-      (progn
-        (window-configuration-to-register :eshell-fullscreen)
-        (eshell)
-        (delete-other-windows))))
-
-;; (epe-colorize-with-face "abc" 'font-lock-comment-face)
-(defmacro epe-colorize-with-face (str face)
-  `(propertize ,str 'face ,face))
-
-(defface epe-venv-face
-  '((t (:inherit font-lock-comment-face)))
-  "Face of python virtual environment info in prompt."
-  :group 'epe)
-
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
-current buffer's file. The eshell is renamed to match that
-directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (height (/ (window-total-height) 3))
-         (name   (car (last (split-string parent "/" t)))))
-    (split-window-vertically (- height))
-    (other-window 1)
-    (eshell "new")
-    (rename-buffer (concat "*eshell: " name "*"))
-
-    (insert (concat "ls"))
-    (eshell-send-input)))
-
-(global-set-key (kbd "C-!") 'eshell-here)
-
 (add-hook 'eshell-mode-hook
 	  (lambda () (setq scroll-margin '0)
 	    (hidden-mode-line-mode)))
@@ -1481,9 +1207,7 @@ directory to make multiple eshell windows easier."
     (find-file "~/Dropbox/Files/j.gpg")
     )
 #+END_SRC
-
 This is a cool funtion from [[http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html][Endless Paranthesis]]  which narrows and if it is already narrowed it widens 
-
 #+BEGIN_SRC emacs-lisp
   (defun narrow-or-widen-dwim (p)
     "Widen if buffer is narrowed, narrow-dwim otherwise.
@@ -1564,7 +1288,6 @@ Link to [[man:man][man]]  page
 
 
 #+END_SRC
-
 Sudo Editing
 #+BEGIN_SRC emacs-lisp
 (defadvice ido-find-file (after find-file-sudo activate)
@@ -1585,22 +1308,6 @@ buffer is not visiting a file."
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 (global-set-key (kbd "C-x C-r") 'sudo-edit)
 #+END_SRC
-#+BEGIN_SRC emacs-lisp
-(defun writing-mode ()
-  (interactive)
-  (face-remap-add-relative 'org-level-1 :foregound "#000000" )
-  (face-remap-add-relative 'org-level-2 :foregound "#000000" :slant 'italic)
-  (face-remap-add-relative 'org-level-3 :foregound "#000000")
-  ;; (setq org-bullets-bullet-list '(" " " " " " " " " " " " " " " " " " " " " "))
-  (org-mode)
-  (hidden-mode-line-mode)
-  (relative-line-numbers--off)
-(load-theme-buffer-local 'github (current-buffer))
-(setq org-hide-leading-stars t)
-)
-
-#+END_SRC
-
 Move line up and Down
 #+begin_src emacs-lisp
 (defun move-line-up ()
@@ -1625,52 +1332,18 @@ Move line up and Down
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 #+end_src
-
-
-* Leet
-#+BEGIN_SRC emacs-lisp
-(defun leet (start end)
-  "Convert the selected line to 1337"
-  (interactive "r")
-  (progn
-    (save-restriction
-      (narrow-to-region start end)
-      (goto-char (point-min))
-      (while (search-forward "a" nil t)
-	(replace-match "4" nil t))
-      (goto-char (point-min))
-      (while (search-forward "e" nil t)
-	(replace-match "3" nil t))
-      (goto-char (point-min))
-      (while (search-forward "g" nil t)
-	(replace-match "6" nil t))
-      (goto-char (point-min))
-      (while (search-forward "l" nil t)
-	(replace-match "1" nil t))
-      (goto-char (point-min))
-      (while (search-forward "o" nil t)
-	(replace-match "0" nil t))
-      (goto-char (point-min))
-      (while (search-forward "s" nil t)
-	(replace-match "5" nil t))
-      (goto-char (point-min))
-      (while (search-forward "t" nil t)
-	(replace-match "7" nil t))
-      ))
-  )
-#+END_SRC
 * Programming Language
 ** Python
 *** Setting
 #+BEGIN_SRC emacs-lisp
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args " -i")
+;; Ipython interpreter
+;; (setq python-shell-interpreter "ipython2"
+;;       python-shell-interpreter-args "-i")
 
 ;; Normal python shell
 (setq python-shell-interpreter "python"
       python-shell-interpreter-args "")
-
-(setenv "PYTHONPATH" "/home/nemesis/bi0s/library/python")
+(setenv "PYTHONPATH" "~/bi0s/lib/python")
 
 #+END_SRC
 When Using Ipython using arrow to get the previous history does not work
@@ -1682,8 +1355,8 @@ this can be solved by
      (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
      (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
      ;; originally on M-p and M-n
-     (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-     (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
+     (define-key comint-mode-map (kbd "C-c M-p") #'comint-previous-input)
+     (define-key comint-mode-map (kbd "C-c M-n") #'comint-next-input)))
 
 #+END_SRC
 
@@ -1774,38 +1447,132 @@ this can be solved by
   )
 #+END_SRC
 ** C
-
+#+begin_src emacs-lisp
+(setq Man-notify-method 'pushy)
+#+end_src
+*** ggtags
 #+begin_src emacs-lisp
 ;; https://github.com/dkogan/xcscope.el
 ;; Dependencies cscope
-(use-package xcscope
-  :ensure t
-  :config
-  (cscope-setup)
-  )
-;; https://github.com/leoliu/ggtags
-;; Dependencies global
-(use-package ggtags
-  :ensure t
-  :config
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                (ggtags-mode 1))))
-  (define-key ggtags-mode-map (kbd "C-c g g") 'ggtags-find-tag-dwim)
-  (define-key ggtags-mode-map (kbd "C-c g d") 'ggtags-find-definition)
-  (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-tag-regexp)
-  (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-  (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-  (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-  (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+;; (use-package xcscope
+;;   :ensure t
+;;   :config
+;;   (cscope-setup)
+;;   )
+;; ;; https://github.com/leoliu/ggtags
+;; ;; Dependencies global
+;; (use-package ggtags
+;;   :ensure t
+;;   :config
+;;   (add-hook 'c-mode-common-hook
+;;             (lambda ()
+;;               (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+;;                 (ggtags-mode 1))))
+;;   (define-key ggtags-mode-map (kbd "C-c g g") 'ggtags-find-tag-dwim)
+;;   (define-key ggtags-mode-map (kbd "C-c g d") 'ggtags-find-definition)
+;;   (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-tag-regexp)
+;;   (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+;;   (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+;;   (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+;;   (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
 
-  (define-key evil-normal-state-map (kbd "M-.") 'ggtags-find-tag-dwim)
+;;   (define-key evil-normal-state-map (kbd "M-.") 'ggtags-find-tag-dwim)
 
-  (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
-  )
+;;   (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+;;   )
 #+end_src
+*** ccls
 
+#+begin_src emacs-lisp
+;; lsp Configuration 
+(use-package lsp-mode
+  :ensure t
+  :config
+  ;; make sure we have lsp-imenu everywhere we have LSP
+  (require 'lsp-ui-imenu)
+  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+
+  ;; lsp extras
+  (use-package lsp-ui
+    :ensure t
+    :config
+    (setq lsp-ui-sideline-ignore-duplicate t)
+    (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+  (use-package company-lsp
+    :config
+    (push 'company-lsp company-backends))
+  )
+
+
+(use-package ccls
+  :ensure t
+  :config
+  (require 'ccls)
+  (setq ccls-executable "/opt/ccls/Release/ccls")
+  
+  (define-key evil-normal-state-map  (kbd "M-.") 'xref-find-definitions)
+  (define-key evil-normal-state-map  (kbd "C-M-.") 'xref-find-apropos)
+  (define-key evil-normal-state-map  (kbd "M-?") 'lsp-ui-peek-find-references)
+
+  (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil)
+
+
+  (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
+  (setq ccls-sem-highlight-method 'font-lock)
+
+  ;; ;; alternatively, (setq ccls-sem-highlight-method 'overlay)
+  ;; ;; For rainbow semantic highlighting
+  ;; (ccls-use-default-rainbow-sem-highlight)
+
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp)))
+  )
+
+(defun ccls/callee () (interactive) (lsp-ui-peek-find-custom "$ccls/call" '(:callee t)))
+(defun ccls/caller () (interactive) (lsp-ui-peek-find-custom "$ccls/call"))
+(defun ccls/vars (kind) (lsp-ui-peek-find-custom "$ccls/vars" `(:kind ,kind)))
+(defun ccls/base (levels) (lsp-ui-peek-find-custom "$ccls/inheritance" `(:levels ,levels)))
+(defun ccls/derived (levels) (lsp-ui-peek-find-custom "$ccls/inheritance" `(:levels ,levels :derived t)))
+(defun ccls/member (kind) (interactive) (lsp-ui-peek-find-custom "$ccls/member" `(:kind ,kind)))
+
+;; References w/ Role::Role
+(defun ccls/references-read () (interactive)
+       (lsp-ui-peek-find-custom "textDocument/references"
+                                (plist-put (lsp--text-document-position-params) :role 8)))
+
+;; References w/ Role::Write
+(defun ccls/references-write ()
+  (interactive)
+  (lsp-ui-peek-find-custom "textDocument/references"
+                           (plist-put (lsp--text-document-position-params) :role 16)))
+
+;; References w/ Role::Dynamic bit (macro expansions)
+(defun ccls/references-macro () (interactive)
+       (lsp-ui-peek-find-custom "textDocument/references"
+                                (plist-put (lsp--text-document-position-params) :role 64)))
+
+;; References w/o Role::Call bit (e.g. where functions are taken addresses)
+(defun ccls/references-not-call () (interactive)
+       (lsp-ui-peek-find-custom "textDocument/references"
+                                (plist-put (lsp--text-document-position-params) :excludeRole 32)))
+
+;; ccls/vars ccls/base ccls/derived ccls/members have a parameter while others are interactive.
+;; (ccls/base 1) direct bases
+;; (ccls/derived 1) direct derived
+;; (ccls/member 2) => 2 (Type) => nested classes / types in a namespace
+;; (ccls/member 3) => 3 (Func) => member functions / functions in a namespace
+;; (ccls/member 0) => member variables / variables in a namespace
+;; (ccls/vars 1) => field
+;; (ccls/vars 2) => local variable
+;; (ccls/vars 3) => field or local variable. 3 = 1 | 2
+;; (ccls/vars 4) => parameter
+
+;; ;; References whose filenames are under this project
+(use-package ivy-xref
+  :ensure t
+  :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+#+end_src
 * Custom Faces
 ** Org
 #+BEGIN_SRC emacs-lisp
@@ -1813,37 +1580,6 @@ this can be solved by
  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
  '(org-level-3 ((t (:inherit outline-3 :height 1.0)))))
-#+END_SRC
-** Banner 
-#+BEGIN_SRC emacs-lisp
-
-;; (defun insert-ascii-banner-centered (file)
-;;   "Insert banner from FILE."
-;;   (insert
-;;    (with-temp-buffer
-;;      (insert-file-contents file)
-;;      (let ((banner-width 0))
-;;        (while (not (eobp))
-;;          (let ((line-length (- (line-end-position) (line-beginning-position))))
-;;            (if (< banner-width line-length)
-;;                (setq banner-width line-length)))
-;;          (forward-line 1))
-;;        (goto-char 0)
-;;        (let ((margin (max 0 (floor (/ (- 150 banner-width) 2)))))
-;;          (while (not (eobp))
-;; 	   (insert (make-string margin ?\ ))
-;;            (forward-line 1))))
-;;      (buffer-string))))
-;; (progn
-;;   (switch-to-buffer-other-window "banner")
-;;   (org-mode)
-;;   (delete-other-windows)
-;;   (erase-buffer)
-;;   (insert-ascii-banner-centered  "~/.emacs.d/banner")
-;;   (put-text-property (point-min) (point-max) 'font-lock-face '(:foreground "#51afef"))
-;;   (read-only-mode)
-;;   )
-
 #+END_SRC
 * CTF
 #+BEGIN_SRC emacs-lisp
@@ -1950,24 +1686,5 @@ Rop Gadget search
  '(("a" (lambda (x) (insert (car (split-string x "\:")))) "Insert Address")
    ("r" (lambda (x) (insert (cdr (split-string x "\:")))) "Insert Gadget"))
  )
-#+END_SRC
-
-* EXWM
-#+BEGIN_SRC emacs-lisp
-;; (use-package exwm
-;;   :ensure t
-;;   :config
-;;   (require 'exwm-randr)
-;; (setq exwm-randr-workspace-output-plist '(1 "LVDS-1"))
-;; (add-hook 'exwm-randr-screen-change-hook
-;; 	  (lambda ()
-;;             (start-process-shell-command
-;;              "xrandr" nil "xrandr --output HDMI-1  --primary --above LVDS-1 --auto")))
-;; (require 'exwm-config)
-;; (require 'exwm-systemtray)
-;; (exwm-systemtray-enable)
-;; (exwm-randr-enable)
-;; (exwm-config-default)
-;; )
 #+END_SRC
 
