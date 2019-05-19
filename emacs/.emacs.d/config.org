@@ -1362,42 +1362,22 @@ this can be solved by
 
 *** Jedi
 #+BEGIN_SRC emacs-lisp
-  (use-package company-jedi
-    :ensure t
-    :init
-    (defun my/python-mode-hook ()
+(use-package company-jedi
+  :ensure t
+  :config
+  (defun my/python-mode-hook ()
     (add-to-list 'company-backends 'company-jedi))
-    (add-hook 'python-mode-hook 'my/python-mode-hook)
-    )
+  (add-hook 'python-mode-hook 'my/python-mode-hook)
+  (setq jedi:server-args
+        '("--sys-path" "/usr/local/lib/python2.7/dist-packages"
+          "--sys-path" "/usr/lib/python2.7/dist-packages"
+          "--sys-path" "/home/nemesis/.local/lib/python2.7/site-packages"))
+  )
 #+END_SRC
 - dependencies
     #+BEGIN_SRC sh
-    sudo pip insyall jedi
+    sudo pip install jedi
     #+END_SRC
-*** Elpy
-#+BEGIN_SRC emacs-lisp
-(use-package pyvenv
-  :ensure t
-  )
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable)
-  ;; (elpy-use-ipython)
-  (setq elpy-rpc-python-command "/usr/bin/python3")
-  (setq elpy-modules '(elpy-module-sane-defaults
-		       elpy-module-company
-		       elpy-module-eldoc
-		       elpy-module-flymake
-		       elpy-module-pyvenv
-		       elpy-module-yasnippet))
-;; use flycheck not flymake with elpy
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-(setq elpy-rpc-backend "jedi")
-  )
-#+END_SRC
 *** pep8
 #+BEGIN_SRC emacs-lisp
 (use-package py-autopep8
